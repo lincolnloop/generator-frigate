@@ -1,0 +1,9 @@
+/*
+ *  SHIMS
+ *
+ *  Shims or notable enhancements to third party libs, browsers, etc.
+ */
+
+// http://css-tricks.com/international-box-sizing-awareness-day/
+*, *:before, *:after {
+  box-sizing: border-box;

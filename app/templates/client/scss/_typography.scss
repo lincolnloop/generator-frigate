@@ -13,7 +13,6 @@
 
 html {
   font-family: $base-font;
-  font-size: 16px;
 }
 
 body {
@@ -79,9 +78,7 @@ blockquote:before {
   padding-right: .4em;
 }
 
-h1,
-h2,
-h3 {
+h1, h2, h3, h4, h5, h6 {
   font-family: $support-font;
   font-weight: normal;
 }

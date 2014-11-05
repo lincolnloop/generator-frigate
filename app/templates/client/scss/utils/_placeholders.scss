@@ -1,0 +1,68 @@
+/*
+ *  PLACEHOLDER SELECTORS
+ *
+ *  Placeholder selectors do not get compiled by Sass. They are great for
+ *  abstracting style from other classes. This file contains
+ *  global selectors only, in the form of helpers.
+ *
+ *  Best practices: http://www.sitepoint.com/sass-mixin-placeholder/
+ */
+
+/* SHIMS, HELPERS */
+
+// Gives us the basic for creating a workable pseudo element
+// for :before or :after
+%pseudo {
+  display: block;
+  content: "";
+  pointer-events: none;
+}
+
+// http://www.sitepoint.com/new-css-image-replacement-technique/
+%offscreen-text {
+  text-indent: -1000%; // Nuke it from orbit
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+// Related to %vertical-center in utils/_mixins.scss
+%vertical-center-parent {
+  -webkit-transform-style: preserve-3d;
+}
+
+// Space between sub-blocks, like products, blog posts, etc.
+%sub-block-space {
+  @include trailer(1);
+}
+
+/* STYLE SPECIFIC */
+
+%highlight {
+  color: $highlight-color;
+}
+
+// Put a silly little arrow in front of links
+%cta-link {
+  &:before {
+    @extend %pseudo;
+    @include inline-block;
+    margin-right: rhythm(.25);
+    content: "→";
+  }
+}
+
+// Kill the dots/counts/whatever on list items
+%kill-list-dots {
+  li {
+    list-style: none;
+  }
+}
+
+// Big, round button-ish icon with a background
+%bg-icon {
+  border: none;
+  background-color: $highlight-color;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 55%;
+}
