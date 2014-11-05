@@ -25,7 +25,7 @@ var cookies = require('cookies');
 // html templates (when using the connect server)
 gulp.task('assets', function() {
   gulp.src('templates/*.html')
-    .pipe(gulp.dest(<%= buildDest %>));
+    .pipe(gulp.dest('<%= buildDest %>'));
 });
 
 // --------------------------
