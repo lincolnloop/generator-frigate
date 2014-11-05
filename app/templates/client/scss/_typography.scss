@@ -1,0 +1,87 @@
+/*
+ *  TYPOGRAPHY
+ *
+ *  Gives us a great foundation for slick type. Based on bits
+ *  and pieces from typeplate.com and other sources. There is some
+ *  overlap with this file and vendor/_normalize.scss, be careful!
+ *
+ *  A good walkthrough of some of this can be found here:
+ *  http://webdesign.tutsplus.com/articles/a-web-designers-typographic-boilerplate--webdesign-15234
+ */
+
+/* FOUNDATION */
+
+html {
+  font-family: $base-font;
+  font-size: 16px;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  hyphens: auto;
+  text-rendering: optimizeLegibility;
+  word-wrap: break-word;
+
+  color: $text-color;
+}
+
+abbr,
+acronym,
+blockquote,
+code,
+dir,
+kbd,
+listing,
+plaintext,
+q,
+samp,
+tt,
+var,
+xmp {
+  // http://meyerweb.com/eric/thoughts/2012/12/17/where-to-avoid-css-hyphenation
+  hyphens: none;
+}
+
+pre code {
+  word-wrap: normal;
+  // http://css-tricks.com/almanac/properties/w/whitespace
+  white-space: -moz-pre-wrap;
+  white-space: pre-wrap;
+}
+
+pre {
+  white-space: pre;
+}
+
+code {
+  white-space: pre;
+}
+
+abbr {
+  // https://developer.mozilla.org/en-US/docs/CSS/font-variant
+  font-variant: small-caps;
+  font-weight: 600;
+  text-transform: lowercase;
+  color: $gray;
+}
+
+abbr[title]:hover {
+  cursor: help;
+}
+
+blockquote {
+ font-style: italic;
+}
+
+blockquote:before {
+  content: "\201C";
+  display: inline-block;
+  padding-right: .4em;
+}
+
+h1,
+h2,
+h3 {
+  font-family: $support-font;
+  font-weight: normal;
+}

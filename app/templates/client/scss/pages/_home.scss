@@ -1,0 +1,85 @@
+/*
+ *  HOME
+ *
+ *  All styles specific to the homepage
+ */
+
+body.home {
+  background: $gainsboro;
+
+  .hero {
+    margin-bottom: ms(3);
+  }
+}
+
+.upcoming .headline {
+  margin-bottom: ms(2);
+  font-size: ms(2);
+  text-align: center;
+}
+
+.talk-list {
+  @include flexbox;
+  @include flex-flow(row wrap);
+  @include justify-content(space-between);
+}
+
+.talk-list .talk {
+  width: 340px;
+  background: $white;
+
+  .talk-preview {
+    max-width: 100%;
+  }
+
+  .talk-title {
+    margin-bottom: .25rem;
+    font-family: $support-font;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .by-line,
+  .present-time {
+    margin-bottom: 0;
+    font-size: .9rem;
+  }
+
+  .timestamp {
+    font-weight: bold;
+  }
+
+  .talk-description {
+    font-size: .9rem;
+  }
+}
+
+.talk-list .talk {
+  margin: 0 auto ms(1);
+  padding-bottom: .5rem;
+
+  .talk-header,
+  .talk-description {
+    padding: .5rem;
+  }
+
+  .talk-header {
+    padding-bottom: 0;
+  }
+}
+
+.talk-tags {
+  padding: 0;
+  margin: 0;
+
+  li {
+    @include inline-block;
+    list-style: none;
+  }
+
+  .talk-tag {
+    padding: .15rem .3rem;
+    border: 1px solid $light-gray;
+    border-radius: 2px;
+  }
+}

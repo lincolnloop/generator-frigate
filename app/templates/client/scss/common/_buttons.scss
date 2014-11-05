@@ -1,0 +1,79 @@
+/*
+ *  BUTTONS
+ *
+ */
+
+/* DEPENDENCIES */
+
+%round-btn {
+  border-radius: 50%;
+}
+
+// We only allow for inactive color
+@mixin button-colors($bg-color, $color: $white, $visited-color: $color) {
+  $dark-color: darken($bg-color, 20%);
+
+  border-color: $bg-color;
+  background-color: $bg-color;
+
+  font-family: $support-font;
+  font-weight: 600;
+
+  & {
+    color: $color;
+  }
+
+  &:visited {
+    color: $visited-color;
+  }
+
+  &:hover,
+  &:active {
+    background-color: $dark-color;
+    border-color: $dark-color;
+    color: $color;
+  }
+}
+
+@mixin ghost-btn($color: $gray) {
+  $dark-color: darken($color, 20%);
+
+  @include button-colors($color, $color);
+  border: 2px solid $color;
+  border-bottom-width: $btn-bottom-width;
+
+  &,
+  &:hover {
+    background-color: transparent;
+  }
+
+  &:hover {
+    border-color: $dark-color;
+    color: $dark-color;
+  }
+}
+
+/* BEGIN STYLES */
+
+button,
+.btn {
+  @include inline-block;
+  // Skinny top and bottoms but wider buttons, relative to font size
+  padding: $input-padding;
+
+  border: 1px solid;
+  border-radius: $border-radius;
+
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button,
+.btn-primary {
+  @include button-colors(darken($darksalmon, 15%));
+}
+
+.btn-secondary {
+  @include button-colors($highlight-color);
+}

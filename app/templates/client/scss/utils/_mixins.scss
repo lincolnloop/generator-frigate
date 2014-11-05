@@ -1,0 +1,104 @@
+/*
+ *  MIXINS
+ *
+ *  Common reusable styles or shims.
+ *
+ *  Best practices: http://www.sitepoint.com/sass-mixin-placeholder/
+ */
+
+// Absolutely position an object
+@mixin abs-pos($top: auto, $right: auto, $bottom: auto, $left: auto) {
+  position: absolute;
+
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+}
+
+// Center aligns a block level element.
+@mixin center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// Creates perfectly aligned inline block elements
+@mixin inline-block {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+// Center aligns something absolutely. Nuke from orbit method.
+// Don't forget position: relative on parent!
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  @include translate(-50%, -50%);
+}
+
+// Simple vertical centering
+// http://zerosixthree.se/vertical-align-anything-with-just-3-lines-of-css/
+// Add -webkit-transform-style: preserve-3d; to parent of element
+@mixin vertical-center {
+  position: relative;
+  top: 50%;
+  @include translateY(-50%);
+}
+
+// Table-based vertical centering
+// Apply to parent and pass in child element
+@mixin vertical-center-table($selector) {
+  display: table;
+
+  #{$selector} {
+    display: table-cell;
+    vertical-align: middle;
+  }
+}
+
+// Clears floats with a pseudo element
+// http://css-tricks.com/snippets/css/clear-fix/
+// NOTE: We use *our* clear fix on purpose, not Compass or Susy's
+@mixin clear {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+// Hides text for accessibility reasons or whatever
+// http://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+@mixin visuallyhidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px; width: 1px;
+  margin: -1px; padding: 0; border: 0;
+}
+
+// Undoes the hidden effect above. You'll probably never need this, right?
+@mixin visuallyshown {
+  position: static;
+  overflow: auto;
+  clip: none;
+  height: auto; width: auto;
+  margin: -auto; padding: auto; border: auto;
+}
+
+// Killer trailing space
+@mixin bottomless {
+  & > *:last-child {
+    @include trailer(0);
+  }
+}
+
+// Poor man's media query mixin.
+// Pass in named media queries!
+@mixin at-break($media-query) {
+  @media (#{$media-query}) {
+    @content;
+  }
+}

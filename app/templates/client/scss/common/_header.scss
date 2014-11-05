@@ -1,0 +1,72 @@
+/*
+ *  HEADER
+ *
+ *  All header, primary nav, and logo styles
+ */
+
+.site-header {
+  background: darken($darkslategray, 5%);
+  text-align: center;
+  color: $white;
+}
+
+.site-header .inner-container {
+  max-width: 100%;
+  margin: 0;
+}
+
+.site-header a {
+  display: block;
+  line-height: 3rem;
+  color: $white;
+}
+
+.logo {
+  display: block;
+  font-family: $support-font;
+  font-size: ms(1);
+  font-weight: 600;
+}
+
+.logo i {
+  color: $lemon;
+}
+
+.primary-nav a {
+  font-size: ms(1, 14px);
+
+  &:hover {
+    color: $lemon;
+  }
+}
+
+.site-header {
+  @include at-break($md-query) {
+    a {
+      @include inline-block;
+      line-height: 4.5rem;
+    }
+
+    .inner-container {
+      @include flexbox;
+      max-width: 90%;
+      margin: 0 auto;
+    }
+
+    .logo {
+      @include inline-block;
+      @include flex(1);
+      text-align: left;
+    }
+
+    .primary-nav {
+      @include flexbox;
+      @include flex(1);
+      @include justify-content(flex-end);
+    }
+
+    .primary-nav a {
+      margin-left: ms(1);
+    }
+  }
+}

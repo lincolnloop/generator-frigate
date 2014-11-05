@@ -1,0 +1,38 @@
+$base-font: 'Varela Round', sans-serif;
+$support-font: 'Source Sans Pro', sans-serif;
+
+$ms-base: 1rem;
+
+// Generic Grays/Whites/Darks
+$dark-gray: #555;
+$gray: #797979;
+$light-gray: #ccc;
+$whitesmoke: #fdfdfd;
+$white: #fff;
+
+// Primary palette colors
+// Demo: http://coolors.co/dfecd4-fff8ca-f9d89b-e99d86-504c57
+// TODO: These names are poor
+$gainsboro: #dfecd4;
+$lemon: #fff8ca;
+$navajowhite: #f9d89b;
+$darksalmon: #e99d86;
+$darkslategray: #504c57;
+
+// Application of palette
+$text-color: $darkslategray;
+$brand-color: $darkslategray;
+$brand-color-alt: $gainsboro;
+
+$highlight-color: $lemon;
+$error-color: darken($darksalmon, 15%);
+
+// Style Globals
+$btn-bottom-width: 2px;
+$border-radius: 2px;
+$shadow-border-size: 4px;
+
+$input-padding: .5em 1em;
+
+// Grid globals
+$md-query: "min-width: 700px";

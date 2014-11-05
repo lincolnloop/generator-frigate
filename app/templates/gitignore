@@ -1,0 +1,7 @@
+<%= buildDest %>
+node_modules
+db.sqlite3
+*.pyc
+bundle/
+.bundle/
+.DS_Store
