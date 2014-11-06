@@ -30,11 +30,6 @@
   -webkit-transform-style: preserve-3d;
 }
 
-// Space between sub-blocks, like products, blog posts, etc.
-%sub-block-space {
-  @include trailer(1);
-}
-
 /* STYLE SPECIFIC */
 
 %highlight {

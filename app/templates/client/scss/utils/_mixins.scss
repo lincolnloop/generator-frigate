@@ -35,7 +35,7 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  @include translate(-50%, -50%);
+  transform: translateY(-50%) translateX(-50%);
 }
 
 // Simple vertical centering
@@ -44,7 +44,7 @@
 @mixin vertical-center {
   position: relative;
   top: 50%;
-  @include translateY(-50%);
+  transform: translateY(-50%);
 }
 
 // Table-based vertical centering
@@ -91,7 +91,7 @@
 // Killer trailing space
 @mixin bottomless {
   & > *:last-child {
-    @include trailer(0);
+    margin-bottom: 0;
   }
 }
 
