@@ -47,9 +47,11 @@ module.exports = generators.Base.extend({
     this.template('gitignore', '.gitignore');
   },
   app: function() {
-    this.template('gulpfile.js', 'gulpfile.js');
     this.directory('client');
+    this.template('gulpfile.js', 'gulpfile.js');
     this.template('templates/index.html', 'templates/index.html');
+    this.src.copy('Gemfile', 'Gemfile');
+    this.src.copy('Gemfile.lock', 'Gemfile.lock');
   },
   install: function() {
     this.npmInstall();

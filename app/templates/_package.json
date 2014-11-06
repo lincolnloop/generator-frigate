@@ -20,7 +20,9 @@
     "gulp-sourcemaps": "^1.2.7",
     "gulp-util": "^3.0.1",
     "vinyl-source-stream": "^1.0.0",
-    "watchify": "^2.1.1"
+    "watchify": "^2.1.1",
+     "gulp-if": "^1.2.5",
+    "gulp-uglify": "^1.0.1"
 <% if (includeStaticServer) { %>,"gulp-connect": "^2.2.0",
 "grunt-connect-pushstate": "^0.2.0",
 "cookies": "^0.5.0"

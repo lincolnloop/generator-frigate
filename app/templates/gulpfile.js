@@ -1,6 +1,9 @@
 'use strict';
 var gulp = require('gulp');
 var gutil = require('gulp-util');
+var del = require('del');
+var uglify = require('gulp-uglify');
+var gulpif = require('gulp-if');
 // sass
 var sass = require('gulp-sass');
 // sourcemaps
@@ -18,45 +21,72 @@ var pushState = require('grunt-connect-pushstate/lib/utils').pushState;
 var cookies = require('cookies');
 <% } %>
 
+var isProd = process.env.NODE_ENV === 'production';
 
 // --------------------------
-// Copy static assets
+// CUSTOM TASK METHODS
 // --------------------------
-// html templates (when using the connect server)
-gulp.task('assets', function() {
-  gulp.src('templates/*.html')
-    .pipe(gulp.dest('<%= buildDest %>'));
-});
-
-// --------------------------
-// SASS (dev)
-// --------------------------
-gulp.task('sass', function() {
-  return gulp.src('./client/scss/*.scss')
-    .pipe(sourcemaps.init())
-    .pipe(sass())
-    // error logging
-    .on('error', gutil.log)
-    // write sourcemaps to a specific directory
-    .pipe(sourcemaps.write('./'))
-    // give it a file and save
-    .pipe(gulp.dest('<%= buildDest %>css'));
-});
-
-// --------------------------
-// Browserify (dev)
-// --------------------------
-gulp.task('browserify', function() {
-  var bundler = watchify(browserify('./client/js/index.js', watchify.args));
-  var rebundle = function() {
-    return bundler.bundle()
-      .on('error', gutil.log.bind(gutil, 'Browserify Error'))
-      .pipe(source('build.js'))
-      .pipe(gulp.dest('<%= buildDest %>js/')).pipe(livereload());
+var tasks = {
+  // --------------------------
+  // Copy static assets
+  // --------------------------
+  // html templates (when using the connect server)
+  assets: function() {
+    return gulp.src('templates/*.html')
+      .pipe(gulp.dest('<%= buildDest %>'));
+  },
+  // --------------------------
+  // SASS (dev)
+  // --------------------------
+  sass: function() {
+    return gulp.src('./client/scss/*.scss')
+      // sourcemaps init
+      .pipe(gulpif(!isProd, sourcemaps.init()))
+      .pipe(sass({
+        outputStyle: isProd ? 'compressed' : 'nested'
+      }))
+      .on('error', gutil.log)
+      // write sourcemaps to a specific directory
+      .pipe(gulpif(!isProd, sourcemaps.write('./')))
+      // uglify on production builds
+      //.pipe(gulpif(prod, uglify()))
+      // give it a file and save
+      .pipe(gulp.dest('<%= buildDest %>css'));
+  },
+  // --------------------------
+  // Browserify (dev)
+  // --------------------------
+  browserify: function() {
+    var bundler = browserify('./client/js/index.js', watchify.args);
+    if (!isProd) {
+      bundler = watchify(bundler);
+    }
+    var rebundle = function() {
+      return bundler.bundle()
+        .on('error', gutil.log.bind(gutil, 'Browserify Error'))
+        .pipe(source('build.js'))
+        .pipe(gulp.dest('<%= buildDest %>js/'))
+        .pipe(gulpif(!isProd, livereload()));
+    }
+    bundler.on('update', rebundle);
+    return rebundle();
   }
-  bundler.on('update', rebundle);
-  return rebundle();
+}
+
+// --------------------------
+// CUSTOMS TASKS
+// --------------------------
+gulp.task('clean', function(cb) {
+    return del(['<%= buildDest %>'], cb);
 });
+// for production we require the clean method on every individual task
+var req = process.env.NODE_ENV === 'production' ? ['clean'] : [];
+// individual tasks
+gulp.task('assets', req, tasks.assets);
+gulp.task('sass', req, tasks.sass);
+gulp.task('browserify', req, tasks.browserify);
+// deploy
+gulp.task('dist', ['clean', 'assets', 'sass', 'browserify']);
 
 // --------------------------
 // DEV/WATCH TASK
@@ -69,7 +99,7 @@ gulp.task('watch', ['assets', 'sass', 'browserify'], function() {
     }
   });
 
-<% if (includeStaticServer) { %>
+  <% if (includeStaticServer) { %>
   // create live reload server
   connect.server({
     'root': '<%= buildDest %>',
@@ -89,8 +119,10 @@ gulp.task('watch', ['assets', 'sass', 'browserify'], function() {
       ];
     }
   });
+  // point livereload to connect.reload
+  // so we don't have to if-check everything
   livereload = connect.reload;
-<% } %>
+  <% } %>
 
   // watch the css files and reload the changed ones
   gulp.watch('<%= buildDest %>css/**/*.css').on('change', function(event) {
