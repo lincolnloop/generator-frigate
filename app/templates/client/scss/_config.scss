@@ -12,11 +12,11 @@ $white: #fff;
 
 // Application of palette
 $text-color: $dark-gray;
-$brand-color: $darkslategray;
-$brand-color-alt: $gainsboro;
+$brand-color: $whitesmoke;
+$brand-color-alt: $white;
 
 $highlight-color: ;
-$error-color: darken($darksalmon, 15%);
+$error-color: darken(red, 15%);
 
 // Style Globals
 $btn-bottom-width: 2px;
