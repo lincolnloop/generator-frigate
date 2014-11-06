@@ -71,7 +71,7 @@ button,
 
 button,
 .btn-primary {
-  @include button-colors(darken($darksalmon, 15%));
+  @include button-colors(darken(red, 15%));
 }
 
 .btn-secondary {
