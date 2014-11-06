@@ -4,6 +4,7 @@ var gutil = require('gulp-util');
 var del = require('del');
 var uglify = require('gulp-uglify');
 var gulpif = require('gulp-if');
+var buffer = require('vinyl-buffer');
 // sass
 var sass = require('gulp-sass');
 // sourcemaps
@@ -43,13 +44,12 @@ var tasks = {
       // sourcemaps init
       .pipe(gulpif(!isProd, sourcemaps.init()))
       .pipe(sass({
+        sourceComments: !isProd,
         outputStyle: isProd ? 'compressed' : 'nested'
       }))
       .on('error', gutil.log)
       // write sourcemaps to a specific directory
       .pipe(gulpif(!isProd, sourcemaps.write('./')))
-      // uglify on production builds
-      //.pipe(gulpif(prod, uglify()))
       // give it a file and save
       .pipe(gulp.dest('<%= buildDest %>css'));
   },
@@ -57,7 +57,10 @@ var tasks = {
   // Browserify (dev)
   // --------------------------
   browserify: function() {
-    var bundler = browserify('./client/js/index.js', watchify.args);
+    var bundler = browserify('./client/js/index.js', {
+      debug: !isProd,
+      cache: {}
+    });
     if (!isProd) {
       bundler = watchify(bundler);
     }

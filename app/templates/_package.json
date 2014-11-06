@@ -19,6 +19,7 @@
     "gulp-sass": "^1.2.2",
     "gulp-sourcemaps": "^1.2.7",
     "gulp-util": "^3.0.1",
+    "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.0.0",
     "watchify": "^2.1.1",
      "gulp-if": "^1.2.5",
