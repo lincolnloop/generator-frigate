@@ -1,14 +1,15 @@
 {
   "name": "generator-frigate",
   "version": "0.1.0",
-  "description": "Yeoman generator for React apps",
+  "description": "Yeoman generator with browserify, libsass and livereload",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lincolnloop/generator-frigate"
+  },
   "keywords": [
     "yeoman-generator"
   ],
   "dependencies": {
     "yeoman-generator": "^0.17.7"
-  },
-  "devDependencies": {
-    "chalk": "^0.5.1"
   }
 }
