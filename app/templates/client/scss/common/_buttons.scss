@@ -13,11 +13,11 @@
 @mixin button-colors($bg-color, $color: $white, $visited-color: $color) {
   $dark-color: darken($bg-color, 20%);
 
-  border-color: $bg-color;
+  border-width: 2px solid $bg-color;
   background-color: $bg-color;
 
   font-family: $support-font;
-  font-weight: 600;
+  font-weight: bold;
 
   & {
     color: $color;

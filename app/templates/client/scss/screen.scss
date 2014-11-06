@@ -1,21 +1,19 @@
 @import "config";
 
 @import "vendor/normalize";
-@import "vendor/modular-scale";
 @import "vendor/flex";
 
 @import "utils/mixins";
+@import "utils/placeholders";
 
+@import "shims";
 @import "typography";
 
-@import "common/elements"; // Base reset per our design
 @import "common/layout";
 @import "common/header";
 @import "common/footer";
 
+@import "common/elements"; // Base reset per our design
+
+@import "common/forms";
 @import "common/buttons";
-
-@import "components/hero";
-
-
-@import "pages/home";

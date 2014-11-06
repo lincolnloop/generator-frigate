@@ -3,18 +3,3 @@
  *
  * Base element reset. Builds off of Normalize.
  */
-
-* {
-  -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box;
-  box-sizing: content-box;
-}
-
-a {
-  color: $darkslategray;
-  text-decoration: none;
-}
-
-.ltl-brand {
-  color: $lemon;
-}
