@@ -94,8 +94,6 @@ var req = production ? ['clean'] : [];
 gulp.task('assets', req, tasks.assets);
 gulp.task('sass', req, tasks.sass);
 gulp.task('browserify', req, tasks.browserify);
-// deploy
-gulp.task('dist', ['clean', 'assets', 'sass', 'browserify']);
 
 // --------------------------
 // DEV/WATCH TASK
@@ -108,7 +106,7 @@ gulp.task('watch', ['assets', 'sass', 'browserify'], function() {
     }
   });
 
-  <% if (includeStaticServer) { %>
+<% if (includeStaticServer) { %>
   // create live reload server
   connect.server({
     'root': '<%= buildDest %>',
@@ -131,7 +129,7 @@ gulp.task('watch', ['assets', 'sass', 'browserify'], function() {
   // point livereload to connect.reload
   // so we don't have to if-check everything
   livereload = connect.reload;
-  <% } %>
+<% } %>
 
   // watch the css files and reload the changed ones
   gulp.watch('<%= buildDest %>css/**/*.css').on('change', function(event) {
@@ -151,8 +149,10 @@ gulp.task('watch', ['assets', 'sass', 'browserify'], function() {
 
 // build task
 gulp.task('build', [
+  'clean',
   'assets',
-  'sass'
+  'sass',
+  'browserify'
 ]);
 
 gulp.task('default', ['watch']);
