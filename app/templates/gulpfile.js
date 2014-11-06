@@ -15,6 +15,9 @@ var livereload = require('gulp-livereload');
 var watchify = require('watchify');
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
+// image optimization
+var imagemin = require('gulp-imagemin');
+var pngquant = require('imagemin-pngquant');
 // connect server
 <% if (includeStaticServer) { %>
 var connect = require('gulp-connect');
@@ -31,9 +34,18 @@ var tasks = {
   // --------------------------
   // Copy static assets
   // --------------------------
-  // html templates (when using the connect server)
   assets: function() {
-    return gulp.src('templates/*.html')
+    return gulp.src('./client/assets/**/*')
+      .pipe(imagemin({
+        progressive: true,
+        svgoPlugins: [{removeViewBox: false}],
+        use: [pngquant()]
+      }))
+      .pipe(gulp.dest('<%= buildDest %>assets/'));
+  },
+  // html templates (when using the connect server)
+  templates: function() {
+    gulp.src('templates/*.html')
       .pipe(gulp.dest('<%= buildDest %>'));
   },
   // --------------------------
