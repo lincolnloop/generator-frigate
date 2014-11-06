@@ -7,9 +7,22 @@
     "url": "https://github.com/lincolnloop/generator-frigate"
   },
   "keywords": [
-    "yeoman-generator"
+    "yeoman-generator",
+    "browserify",
+    "sass",
+    "livereload"
   ],
   "dependencies": {
     "yeoman-generator": "^0.17.7"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/lincolnloop/generator-frigate/issues"
+  },
+  "homepage": "https://github.com/lincolnloop/generator-frigate",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Marco Louro <marco@lincolnloop.com>",
+  "license": "BSD"
 }
