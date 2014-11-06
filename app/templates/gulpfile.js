@@ -22,7 +22,7 @@ var pushState = require('grunt-connect-pushstate/lib/utils').pushState;
 var cookies = require('cookies');
 <% } %>
 
-var isProd = process.env.NODE_ENV === 'production';
+var production = (process.env.NODE_ENV === 'production');
 
 // --------------------------
 // CUSTOM TASK METHODS
@@ -42,14 +42,17 @@ var tasks = {
   sass: function() {
     return gulp.src('./client/scss/*.scss')
       // sourcemaps init
-      .pipe(gulpif(!isProd, sourcemaps.init()))
+      .pipe(gulpif(!production, sourcemaps.init()))
       .pipe(sass({
-        sourceComments: !isProd,
-        outputStyle: isProd ? 'compressed' : 'nested'
+        sourceComments: !production,
+        outputStyle: production ? 'compressed' : 'nested'
       }))
-      .on('error', gutil.log)
+      .on('error', function(err) {
+        gutil.beep();
+        gutil.log(err)
+      })
       // write sourcemaps to a specific directory
-      .pipe(gulpif(!isProd, sourcemaps.write('./')))
+      .pipe(gulpif(!production, sourcemaps.write('./')))
       // give it a file and save
       .pipe(gulp.dest('<%= buildDest %>css'));
   },
@@ -58,18 +61,21 @@ var tasks = {
   // --------------------------
   browserify: function() {
     var bundler = browserify('./client/js/index.js', {
-      debug: !isProd,
+      debug: !production,
       cache: {}
     });
-    if (!isProd) {
+    if (!production) {
       bundler = watchify(bundler);
     }
     var rebundle = function() {
       return bundler.bundle()
-        .on('error', gutil.log.bind(gutil, 'Browserify Error'))
+        .on('error', function(err) {
+          gutil.beep();
+          gutil.log('Browserify Error')
+        })
         .pipe(source('build.js'))
         .pipe(gulp.dest('<%= buildDest %>js/'))
-        .pipe(gulpif(!isProd, livereload()));
+        .pipe(gulpif(!production, livereload()));
     }
     bundler.on('update', rebundle);
     return rebundle();
@@ -83,7 +89,7 @@ gulp.task('clean', function(cb) {
     return del(['<%= buildDest %>'], cb);
 });
 // for production we require the clean method on every individual task
-var req = process.env.NODE_ENV === 'production' ? ['clean'] : [];
+var req = production ? ['clean'] : [];
 // individual tasks
 gulp.task('assets', req, tasks.assets);
 gulp.task('sass', req, tasks.sass);
