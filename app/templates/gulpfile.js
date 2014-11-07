@@ -18,7 +18,6 @@ var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 // image optimization
 var imagemin = require('gulp-imagemin');
-var pngquant = require('imagemin-pngquant');
 // connect server
 <% if (includeStaticServer) { %>
 var connect = require('gulp-connect');
@@ -38,24 +37,41 @@ var watch = argv._.length ? argv._[0] === 'watch' : true;
 // --------------------------
 var tasks = {
   // --------------------------
+  // Delete build folder
+  // --------------------------
+  clean: function(cb) {
+    del(['<%= buildDest %>'], cb);
+  },
+  // --------------------------
   // Copy static assets
   // --------------------------
   assets: function() {
     return gulp.src('./client/assets/**/*')
+      .pipe(gulp.dest('<%= buildDest %>assets/'));
+  },
+  // --------------------------
+  // Optimize asset images
+  // --------------------------
+  images: function() {
+    return gulp.src('client/assets/**/*.{gif,jpg,png,svg}')
       .pipe(imagemin({
         progressive: true,
         svgoPlugins: [{removeViewBox: false}],
-        use: [pngquant()]
+        // png optimization
+        optimizationLevel: production ? 3 : 1
       }))
       .pipe(gulp.dest('<%= buildDest %>assets/'));
   },
+  // --------------------------
+  // HTML
+  // --------------------------
   // html templates (when using the connect server)
   templates: function() {
     gulp.src('templates/*.html')
       .pipe(gulp.dest('<%= buildDest %>'));
   },
   // --------------------------
-  // SASS (dev)
+  // SASS (libsass)
   // --------------------------
   sass: function() {
     return gulp.src('./client/scss/*.scss')
@@ -75,7 +91,7 @@ var tasks = {
       .pipe(gulp.dest('<%= buildDest %>css'));
   },
   // --------------------------
-  // Browserify (dev)
+  // Browserify
   // --------------------------
   browserify: function() {
     var bundler = browserify('./client/js/index.js', {
@@ -108,25 +124,24 @@ var tasks = {
 // --------------------------
 // CUSTOMS TASKS
 // --------------------------
-gulp.task('clean', function(cb) {
-  return del(['<%= buildDest %>'], cb);
-});
+gulp.task('clean', tasks.clean);
 // for production we require the clean method on every individual task
 var req = build ? ['clean'] : [];
 // individual tasks
 gulp.task('templates', req, tasks.templates);
 gulp.task('assets', req, tasks.assets);
+gulp.task('images', build ? ['clean', 'assets'] : ['assets'], tasks.images);
 gulp.task('sass', req, tasks.sass);
 gulp.task('browserify', req, tasks.browserify);
 
 // --------------------------
 // DEV/WATCH TASK
 // --------------------------
-gulp.task('watch', ['assets', 'sass', 'browserify'], function() {
-
-// Connect server OR livereload
+gulp.task('watch', ['assets', 'templates', 'images', 'sass', 'browserify'], function() {
 <% if (includeStaticServer) { %>
-  // create live reload server
+  // --------------------------
+  // Connect server
+  // --------------------------
   connect.server({
     'root': '<%= buildDest %>',
     'port': process.env.PORT || 8000,
@@ -145,7 +160,9 @@ gulp.task('watch', ['assets', 'sass', 'browserify'], function() {
     }
   });
 <% } %>
-  // no connect server, use livereload
+  // --------------------------
+  // Livereload
+  // --------------------------
   livereload.listen(35729, function(err){
     gutil.log(gutil.colors.bgGreen('... Listening on 35729...'));
     if (err) {
@@ -153,14 +170,17 @@ gulp.task('watch', ['assets', 'sass', 'browserify'], function() {
     }
   });
 
-  // watch CSS and reload with  livereload
-  // livereload
+  // --------------------------
+  // Livereload:CSS
+  // --------------------------
   gulp.watch('<%= buildDest %>css/**/*.css').on('change', function(event) {
     gutil.log(gutil.colors.bgBlue('Reloading css...'));
       livereload.changed(event.path);
   });
 
-  // watch the sources and rebuild
+  // --------------------------
+  // watch:sass
+  // --------------------------
   gulp.watch('./client/scss/**/*.scss', ['sass']);
 
   gutil.log(gutil.colors.bgGreen('Watching for changes...'));
@@ -171,6 +191,7 @@ gulp.task('build', [
   'clean',
   'templates',
   'assets',
+  'images',
   'sass',
   'browserify'
 ]);
