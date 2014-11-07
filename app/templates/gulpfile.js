@@ -123,19 +123,13 @@ gulp.task('browserify', req, tasks.browserify);
 // DEV/WATCH TASK
 // --------------------------
 gulp.task('watch', ['assets', 'sass', 'browserify'], function() {
-  livereload.listen(35729, function(err){
-    gutil.log(gutil.colors.bgGreen('... Listening on 35729...'));
-    if (err) {
-      return console.log(err);
-    }
-  });
 
+// Connect server OR livereload
 <% if (includeStaticServer) { %>
   // create live reload server
   connect.server({
     'root': '<%= buildDest %>',
     'port': process.env.PORT || 8000,
-    'livereload': true,
     middleware: function(connect) {
       return [
         // setup the config settings in a cookie
@@ -150,19 +144,20 @@ gulp.task('watch', ['assets', 'sass', 'browserify'], function() {
       ];
     }
   });
-  // point livereload to connect.reload
-  // so we don't have to if-check everything
-  livereload = connect.reload;
 <% } %>
+  // no connect server, use livereload
+  livereload.listen(35729, function(err){
+    gutil.log(gutil.colors.bgGreen('... Listening on 35729...'));
+    if (err) {
+      return console.log(err);
+    }
+  });
 
-  // watch the css files and reload the changed ones
+  // watch CSS and reload with  livereload
+  // livereload
   gulp.watch('<%= buildDest %>css/**/*.css').on('change', function(event) {
     gutil.log(gutil.colors.bgBlue('Reloading css...'));
-    <% if (includeStaticServer) { %>
       livereload.changed(event.path);
-    <% } else { %>
-      connect.reload();
-    <% } %>
   });
 
   // watch the sources and rebuild
