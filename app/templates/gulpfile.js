@@ -83,7 +83,7 @@ var tasks = {
       return bundler.bundle()
         .on('error', function(err) {
           gutil.beep();
-          gutil.log('Browserify Error')
+          gutil.log('Browserify Error:', err);
         })
         .pipe(source('build.js'))
         .pipe(gulp.dest('<%= buildDest %>js/'))
@@ -103,6 +103,7 @@ gulp.task('clean', function(cb) {
 // for production we require the clean method on every individual task
 var req = production ? ['clean'] : [];
 // individual tasks
+gulp.task('templates', req, tasks.templates);
 gulp.task('assets', req, tasks.assets);
 gulp.task('sass', req, tasks.sass);
 gulp.task('browserify', req, tasks.browserify);
@@ -162,6 +163,7 @@ gulp.task('watch', ['assets', 'sass', 'browserify'], function() {
 // build task
 gulp.task('build', [
   'clean',
+  'templates',
   'assets',
   'sass',
   'browserify'

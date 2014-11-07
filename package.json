@@ -19,7 +19,6 @@
     "url": "https://github.com/lincolnloop/generator-frigate/issues"
   },
   "homepage": "https://github.com/lincolnloop/generator-frigate",
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
