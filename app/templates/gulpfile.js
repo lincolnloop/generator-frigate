@@ -5,6 +5,7 @@ var del = require('del');
 var uglify = require('gulp-uglify');
 var gulpif = require('gulp-if');
 var buffer = require('vinyl-buffer');
+var argv = require('yargs').argv;
 // sass
 var sass = require('gulp-sass');
 // sourcemaps
@@ -25,7 +26,12 @@ var pushState = require('grunt-connect-pushstate/lib/utils').pushState;
 var cookies = require('cookies');
 <% } %>
 
-var production = (process.env.NODE_ENV === 'production');
+// gulp build --production
+var production = !!argv.production;
+// determine if we're doing a build
+// and if so, bypass the livereload
+var build = argv._.length ? argv._[0] === 'build' : false;
+var watch = argv._.length ? argv._[0] === 'watch' : true;
 
 // --------------------------
 // CUSTOM TASK METHODS
@@ -76,7 +82,10 @@ var tasks = {
       debug: !production,
       cache: {}
     });
-    if (!production) {
+    // determine if we're doing a build
+    // and if so, bypass the livereload
+    var build = argv._.length ? argv._[0] === 'build' : false;
+    if (watch) {
       bundler = watchify(bundler);
     }
     var rebundle = function() {
@@ -86,8 +95,10 @@ var tasks = {
           gutil.log('Browserify Error:', err);
         })
         .pipe(source('build.js'))
+        .pipe(gulpif(production, buffer()))
+        .pipe(gulpif(production, uglify()))
         .pipe(gulp.dest('<%= buildDest %>js/'))
-        .pipe(gulpif(!production, livereload()));
+        .pipe(gulpif(!production && !build, livereload()));
     }
     bundler.on('update', rebundle);
     return rebundle();
@@ -98,10 +109,10 @@ var tasks = {
 // CUSTOMS TASKS
 // --------------------------
 gulp.task('clean', function(cb) {
-    return del(['<%= buildDest %>'], cb);
+  return del(['<%= buildDest %>'], cb);
 });
 // for production we require the clean method on every individual task
-var req = production ? ['clean'] : [];
+var req = build ? ['clean'] : [];
 // individual tasks
 gulp.task('templates', req, tasks.templates);
 gulp.task('assets', req, tasks.assets);
