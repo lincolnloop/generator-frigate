@@ -18,8 +18,10 @@ var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 // image optimization
 var imagemin = require('gulp-imagemin');
-// connect server
+// testing/mocha
+var mocha = require('gulp-mocha');
 <% if (includeStaticServer) { %>
+// connect server
 var connect = require('gulp-connect');
 var pushState = require('grunt-connect-pushstate/lib/utils').pushState;
 var cookies = require('cookies');
@@ -47,19 +49,6 @@ var tasks = {
   // --------------------------
   assets: function() {
     return gulp.src('./client/assets/**/*')
-      .pipe(gulp.dest('<%= buildDest %>assets/'));
-  },
-  // --------------------------
-  // Optimize asset images
-  // --------------------------
-  images: function() {
-    return gulp.src('client/assets/**/*.{gif,jpg,png,svg}')
-      .pipe(imagemin({
-        progressive: true,
-        svgoPlugins: [{removeViewBox: false}],
-        // png optimization
-        optimizationLevel: production ? 3 : 1
-      }))
       .pipe(gulp.dest('<%= buildDest %>assets/'));
   },
   // --------------------------
@@ -118,6 +107,30 @@ var tasks = {
     }
     bundler.on('update', rebundle);
     return rebundle();
+  },
+  // --------------------------
+  // Optimize asset images
+  // --------------------------
+  optimize: function() {
+    return gulp.src('./client/assets/**/*.{gif,jpg,png,svg}')
+      .pipe(imagemin({
+        progressive: true,
+        svgoPlugins: [{removeViewBox: false}],
+        // png optimization
+        optimizationLevel: production ? 3 : 1
+      }))
+      .pipe(gulp.dest('./client/assets/'));
+  },
+  // --------------------------
+  // Testing with mocha
+  // --------------------------
+  test: function() {
+    return gulp.src('./client/**/*test.js', {read: false})
+      .pipe(mocha({
+        'ui': 'bdd',
+        'reporter': 'spec'
+      })
+    )
   }
 }
 
@@ -130,14 +143,15 @@ var req = build ? ['clean'] : [];
 // individual tasks
 gulp.task('templates', req, tasks.templates);
 gulp.task('assets', req, tasks.assets);
-gulp.task('images', build ? ['clean', 'assets'] : ['assets'], tasks.images);
 gulp.task('sass', req, tasks.sass);
 gulp.task('browserify', req, tasks.browserify);
+gulp.task('optimize', tasks.optimize);
+gulp.task('test', tasks.test);
 
 // --------------------------
 // DEV/WATCH TASK
 // --------------------------
-gulp.task('watch', ['assets', 'templates', 'images', 'sass', 'browserify'], function() {
+gulp.task('watch', ['assets', 'templates', 'sass', 'browserify'], function() {
 <% if (includeStaticServer) { %>
   // --------------------------
   // Connect server
@@ -191,7 +205,6 @@ gulp.task('build', [
   'clean',
   'templates',
   'assets',
-  'images',
   'sass',
   'browserify'
 ]);
