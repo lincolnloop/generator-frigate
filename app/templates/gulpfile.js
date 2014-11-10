@@ -4,6 +4,7 @@ var gutil = require('gulp-util');
 var del = require('del');
 var uglify = require('gulp-uglify');
 var gulpif = require('gulp-if');
+var exec = require('child_process').exec;
 <% if (systemNotifications) { %>
 var notify = require('gulp-notify');
 <% } %>
@@ -40,19 +41,32 @@ var production = !!argv.production;
 var build = argv._.length ? argv._[0] === 'build' : false;
 var watch = argv._.length ? argv._[0] === 'watch' : true;
 
-
-function handleError(task) {
+// ----------------------------
+// Error notification methods
+// ----------------------------
+var handleError = function(task) {
   return function(err) {
+    beep();
     <% if (systemNotifications) { %>
       notify.onError({
-        message: task + ' failed, check the logs..'
-        //sound: 'Gulp'
+        message: task + ' failed, check the logs..',
+        sound: false
       })(err);
-    <% } else { %>
-      gutil.beep();
     <% } %>
     gutil.log(gutil.colors.bgRed(task + ' error:'), gutil.colors.red(err));
   };
+}
+var beep = function() {
+  var os = require('os');
+  var exec = require('child_process').exec;
+  var file = 'gulp/error.wav';
+  if (os.platform() === 'linux') {
+    // linux
+    exec("aplay " + file);
+  } else {
+    // mac
+    exec("afplay " + file);
+  }
 }
 // --------------------------
 // CUSTOM TASK METHODS
@@ -134,7 +148,7 @@ var tasks = {
       .pipe(jshint.reporter(stylish))
       .pipe(jshint.reporter('fail'))
       .on('error', function() {
-        gutil.beep();
+        beep();
       });
   },
   // --------------------------

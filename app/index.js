@@ -33,7 +33,7 @@ module.exports = generators.Base.extend({
       name: 'notifications',
       value: 'systemNotifications',
       message: 'Do you want to enable system notifications on errors?',
-      default: false
+      default: true
     }, {
       type    : 'input',
       name    : 'buildDest',
