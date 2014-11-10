@@ -4,6 +4,9 @@ var gutil = require('gulp-util');
 var del = require('del');
 var uglify = require('gulp-uglify');
 var gulpif = require('gulp-if');
+<% if (systemNotifications) { %>
+var notify = require('gulp-notify');
+<% } %>
 var buffer = require('vinyl-buffer');
 var argv = require('yargs').argv;
 // sass
@@ -18,6 +21,9 @@ var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 // image optimization
 var imagemin = require('gulp-imagemin');
+// linting
+var jshint = require('gulp-jshint');
+var stylish = require('jshint-stylish');
 // testing/mocha
 var mocha = require('gulp-mocha');
 <% if (includeStaticServer) { %>
@@ -34,6 +40,20 @@ var production = !!argv.production;
 var build = argv._.length ? argv._[0] === 'build' : false;
 var watch = argv._.length ? argv._[0] === 'watch' : true;
 
+
+function handleError(task) {
+  return function(err) {
+    <% if (systemNotifications) { %>
+      notify.onError({
+        message: task + ' failed, check the logs..'
+        //sound: 'Gulp'
+      })(err);
+    <% } else { %>
+      gutil.beep();
+    <% } %>
+    gutil.log(gutil.colors.bgRed(task + ' error:'), gutil.colors.red(err));
+  };
+}
 // --------------------------
 // CUSTOM TASK METHODS
 // --------------------------
@@ -70,10 +90,7 @@ var tasks = {
         sourceComments: !production,
         outputStyle: production ? 'compressed' : 'nested'
       }))
-      .on('error', function(err) {
-        gutil.beep();
-        gutil.log(err)
-      })
+      .on('error', handleError('SASS'))
       // write sourcemaps to a specific directory
       .pipe(gulpif(!production, sourcemaps.write('./')))
       // give it a file and save
@@ -95,18 +112,30 @@ var tasks = {
     }
     var rebundle = function() {
       return bundler.bundle()
-        .on('error', function(err) {
-          gutil.beep();
-          gutil.log('Browserify Error:', err);
-        })
+        .on('error', handleError('Browserify'))
         .pipe(source('build.js'))
         .pipe(gulpif(production, buffer()))
         .pipe(gulpif(production, uglify()))
         .pipe(gulp.dest('<%= buildDest %>js/'))
         .pipe(gulpif(!production && !build, livereload()));
-    }
+    };
     bundler.on('update', rebundle);
     return rebundle();
+  },
+  // --------------------------
+  // linting
+  // --------------------------
+  lintjs: function() {
+    return gulp.src([
+        'gulpfile.js',
+        './client/js/index.js',
+        './client/js/**/*.js'
+      ]).pipe(jshint())
+      .pipe(jshint.reporter(stylish))
+      .pipe(jshint.reporter('fail'))
+      .on('error', function() {
+        gutil.beep();
+      });
   },
   // --------------------------
   // Optimize asset images
@@ -130,9 +159,9 @@ var tasks = {
         'ui': 'bdd',
         'reporter': 'spec'
       })
-    )
+    );
   }
-}
+};
 
 // --------------------------
 // CUSTOMS TASKS
@@ -145,6 +174,7 @@ gulp.task('templates', req, tasks.templates);
 gulp.task('assets', req, tasks.assets);
 gulp.task('sass', req, tasks.sass);
 gulp.task('browserify', req, tasks.browserify);
+gulp.task('lint:js', tasks.lintjs);
 gulp.task('optimize', tasks.optimize);
 gulp.task('test', tasks.test);
 
@@ -196,6 +226,11 @@ gulp.task('watch', ['assets', 'templates', 'sass', 'browserify'], function() {
   // watch:sass
   // --------------------------
   gulp.watch('./client/scss/**/*.scss', ['sass']);
+
+  // --------------------------
+  // Linting
+  // --------------------------
+  gulp.watch('./client/js/**/*.js', ['lint:js']);
 
   gutil.log(gutil.colors.bgGreen('Watching for changes...'));
 });

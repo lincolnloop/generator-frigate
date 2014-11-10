@@ -29,6 +29,12 @@ module.exports = generators.Base.extend({
       message: 'Would you like to use connect as a basic server?',
       default: false
     }, {
+      type: 'confirm',
+      name: 'notifications',
+      value: 'systemNotifications',
+      message: 'Do you want to enable system notifications on errors?',
+      default: false
+    }, {
       type    : 'input',
       name    : 'buildDest',
       message : 'What is your build destination directory?',
@@ -36,6 +42,7 @@ module.exports = generators.Base.extend({
     }], function (answers) {
       this.github = answers.github;
       this.includeStaticServer = answers.connect;
+      this.systemNotifications = answers.notifications;
       this.buildDest = answers.buildDest;
       done();
     }.bind(this));
