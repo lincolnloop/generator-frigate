@@ -24,5 +24,5 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Marco Louro <marco@lincolnloop.com>",
-  "license": "BSD",
+  "license": "BSD"
 }
