@@ -5,6 +5,7 @@ var del = require('del');
 var uglify = require('gulp-uglify');
 var gulpif = require('gulp-if');
 var exec = require('child_process').exec;
+
 <% if (systemNotifications) { %>
 var notify = require('gulp-notify');
 <% } %>
@@ -12,7 +13,8 @@ var buffer = require('vinyl-buffer');
 var argv = require('yargs').argv;
 // sass
 var sass = require('gulp-sass');
-// sourcemaps
+var postcss = require('gulp-postcss');
+var autoprefixer = require('autoprefixer-core');
 var sourcemaps = require('gulp-sourcemaps');
 // livereload
 var livereload = require('gulp-livereload');
@@ -44,6 +46,18 @@ var watch = argv._.length ? argv._[0] === 'watch' : true;
 // ----------------------------
 // Error notification methods
 // ----------------------------
+var beep = function() {
+  var os = require('os');
+  var file = 'gulp/error.wav';
+  if (os.platform() === 'linux') {
+    // linux
+    exec("aplay " + file);
+  } else {
+    // mac
+    console.log("afplay " + file);
+    exec("afplay " + file);
+  }
+};
 var handleError = function(task) {
   return function(err) {
     beep();
@@ -55,19 +69,7 @@ var handleError = function(task) {
     <% } %>
     gutil.log(gutil.colors.bgRed(task + ' error:'), gutil.colors.red(err));
   };
-}
-var beep = function() {
-  var os = require('os');
-  var exec = require('child_process').exec;
-  var file = 'gulp/error.wav';
-  if (os.platform() === 'linux') {
-    // linux
-    exec("aplay " + file);
-  } else {
-    // mac
-    exec("afplay " + file);
-  }
-}
+};
 // --------------------------
 // CUSTOM TASK METHODS
 // --------------------------
@@ -98,15 +100,29 @@ var tasks = {
   // --------------------------
   sass: function() {
     return gulp.src('./client/scss/*.scss')
-      // sourcemaps init
+      // sourcemaps + sass + error handling
       .pipe(gulpif(!production, sourcemaps.init()))
       .pipe(sass({
         sourceComments: !production,
         outputStyle: production ? 'compressed' : 'nested'
       }))
       .on('error', handleError('SASS'))
+      // generate .maps
+      .pipe(gulpif(!production, sourcemaps.write({
+        'includeContent': false,
+        'sourceRoot': '.'
+      })))
+      // autoprefixer
+      .pipe(gulpif(!production, sourcemaps.init({
+        'loadMaps': true
+      })))
+      .pipe(postcss([autoprefixer({browsers: ['last 2 versions']})]))
+      // we don't serve the source files
+      // so include scss content inside the sourcemaps
+      .pipe(sourcemaps.write({
+        'includeContent': true
+      }))
       // write sourcemaps to a specific directory
-      .pipe(gulpif(!production, sourcemaps.write('./')))
       // give it a file and save
       .pipe(gulp.dest('<%= buildDest %>css'));
   },

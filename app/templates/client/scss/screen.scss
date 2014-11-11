@@ -17,3 +17,12 @@
 
 @import "common/forms";
 @import "common/buttons";
+
+#main {
+  margin: 50px;
+  width: 150px;
+  height: 150px;
+  border-radius: 30px;
+  background: red;
+  transition: transform 1s;
+}
