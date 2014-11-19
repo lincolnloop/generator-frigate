@@ -21,12 +21,14 @@ module.exports = generators.Base.extend({
       },
       message : 'Your app name'
     }], function (answers) {
+      this.appName = answers.name;
       this.appPath = this._.slugify(answers.name);
       done();
     }.bind(this));
   },
   app: function() {
     this.template('_Router.js', path.join(this.appPath, 'Router.js'));
+    this.template('_example.test.js', path.join(this.appPath, 'test/'+ this.appPath +'test.js'));
     this.src.copy('HelloView.js', path.join(this.appPath, 'HelloView.js'));
   }
 });
