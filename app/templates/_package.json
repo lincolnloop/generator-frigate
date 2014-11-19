@@ -1,8 +1,8 @@
 {
   "name": "<%= _.slugify(appname) %>",
   "description": "<%= _.slugify(appname) %> project",
-  "version": "0.2.0",
-  "main": "index.js",
+  "version": "0.1.0",
+  "main": "./client/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,6 +12,11 @@
   },
   "bugs": {
     "url": "<%= github %>/issues"
+  },
+  "browserify": {
+    "transform": [
+      "reactify"
+    ]
   },
   "devDependencies": {
     "autoprefixer-core": "^3.1.2",
@@ -25,6 +30,10 @@
     "gulp-util": "^3.0.1",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.0.0",
+    "ampersand-router": "^1.0.6",
+    "react": "~0.12.1",
+    "reactify": "~0.17.0",
+    "loglevel": "~1.2.0",
     <% if (systemNotifications) { %>"gulp-notify": "^2.0.1",<% } %>
     "watchify": "^2.1.1",
     "gulp-if": "^1.2.5",
