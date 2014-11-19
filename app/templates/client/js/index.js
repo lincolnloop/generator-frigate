@@ -1,12 +1,23 @@
 "use strict";
 
-var obj = {
-  'name': 'Don inn',
-  'activity': 'Party dude',
+var app = require('./app');
+var log = require('loglevel');
 
-  getActivity: function() {
-    return this.name + ' is a ' + this.activity;
-  }
-} // lint error
+// Log level setup
+// if (config.debug) {
+//   log.setLevel('debug');
+// }
 
-console.log(obj.getActivity());
+//
+// jQuery override of the click event so all links use pushState
+//
+//  $(document).on('click', 'a[href]', function (event) {
+//    var url = $(event.currentTarget).attr('href');
+//    if (url.indexOf('http') !== 0) {
+//      app.history.navigate(url, {'trigger': true});
+//      event.preventDefault();
+//    }
+//  });
+
+// initialize all routers here:
+// new <AppName>Router();
