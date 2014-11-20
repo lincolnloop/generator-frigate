@@ -9,6 +9,7 @@ var log = require('loglevel');
 // }
 
 //
+// Single Page Apps only:
 // jQuery override of the click event so all links use pushState
 //
 //  $(document).on('click', 'a[href]', function (event) {
