@@ -23,6 +23,11 @@
 
 ## Usage
 
+You'll need `yo` - the scaffolding tool from `Yeoman` - installed:
+```
+npm install -g yo
+```
+
 Install `generator-frigate`:
 ```
 npm install -g generator-frigate
