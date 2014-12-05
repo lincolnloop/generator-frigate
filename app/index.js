@@ -8,7 +8,7 @@ module.exports = generators.Base.extend({
     // welcome message
     if (!this.options['skip-welcome-message']) {
       this.log(chalk.magenta(
-        'Out of the box I include libsass, browserify and livereload ' +
+        'Out of the box I include libsass, Browserify and BrowserSync ' +
         'to build your app.'
       ));
     }
