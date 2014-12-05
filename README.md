@@ -43,7 +43,7 @@ Run:
 yo frigate
 ```
 
-Run `gulp` for asset watching/compiling with LiveReload support (and the optional static server) and `gulp build --production` for a production-ready build
+Run `gulp` for asset watching/compiling with LiveReload support (and the optional static server) and `gulp build --production` for a production-ready build. Once `gulp` is running, you can access your project at [http://localhost:8000](http://localhost:8000).
 
 ## Documentation
 
