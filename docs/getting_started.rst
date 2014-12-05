@@ -72,7 +72,7 @@ These are tasks that compose ``build`` and ``watch``, but they can run individua
 * optimize
 
 
-Browser Sync
+BrowserSync
 ------------
 
 Working with SASS

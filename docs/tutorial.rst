@@ -19,7 +19,7 @@ Start gulp::
     #
     PORT=9900 gulp
 
-You should see some output in the console showing the various :ref:`Frigate build tasks <gulp_primary_tasks>` executing, and web and Browser-Sync services starting.
+You should see some output in the console showing the various :ref:`Frigate build tasks <gulp_primary_tasks>` executing, and web and BrowserSync services starting.
 
 Open your browser to `http://localhost:8000`_ (adjust port if necessary)
 
