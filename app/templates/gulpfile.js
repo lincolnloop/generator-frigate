@@ -18,7 +18,6 @@ var autoprefixer = require('autoprefixer-core');
 var sourcemaps = require('gulp-sourcemaps');
 // BrowserSync
 var browserSync = require('browser-sync');
-var reload      = browserSync.reload;
 // js
 var watchify = require('watchify');
 var browserify = require('browserify');
@@ -199,7 +198,8 @@ gulp.task('browser-sync', function() {
     browserSync({
         server: {
             baseDir: "./build"
-        }
+        },
+        port: process.env.PORT || 3000
     });
 });
 
@@ -227,15 +227,15 @@ gulp.task('watch', ['assets', 'templates', 'sass', 'browserify', 'browser-sync']
   // watch:sass
   // --------------------------
   gulp.watch('./client/scss/**/*.scss', ['sass']).on('change', function() {
-    reload();
+    browserSync.reload();
   });
 
   // --------------------------
   // watch:js
   // --------------------------
   gulp.watch('./client/js/**/*.js', ['lint:js'], function() {
-    reload();
-  })
+    browserSync.reload();
+  });
 
   gutil.log(gutil.colors.bgGreen('Watching for changes...'));
 });
