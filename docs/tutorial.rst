@@ -19,11 +19,8 @@ Start gulp::
     #
     PORT=9900 gulp
 
-You should see some output in the console showing the various :ref:`Frigate build tasks <gulp_primary_tasks>` executing, and web and BrowserSync services starting.
+You should see some output in the console showing the various :ref:`Frigate build tasks <gulp_primary_tasks>` executing, and web and BrowserSync services starting. Your default browser should open a tab at *localhost:<PORT>* for you.
 
-Open your browser to `http://localhost:8000`_ (adjust port if necessary)
-
-.. _http://localhost:8000: http://localhost:8000
 
 You should see a red square with rounded corners in the upper left. Now we'll make a change to the SASS and confirm that everything updates. In an editor, open *client/scss/screen.scss* and modify the background color::
 
