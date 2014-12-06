@@ -197,6 +197,13 @@ gulp.task('browser-sync', function() {
     });
 });
 
+gulp.task('reload-sass', ['sass'], function(){
+  browserSync.reload();
+});
+gulp.task('reload-js', ['lint:js'], function(){
+  browserSync.reload();
+});
+
 // --------------------------
 // CUSTOMS TASKS
 // --------------------------
@@ -220,16 +227,12 @@ gulp.task('watch', ['assets', 'templates', 'sass', 'browserify', 'browser-sync']
   // --------------------------
   // watch:sass
   // --------------------------
-  gulp.watch('./client/scss/**/*.scss', ['sass']).on('change', function() {
-    browserSync.reload();
-  });
+  gulp.watch('./client/scss/**/*.scss', ['reload-sass']);
 
   // --------------------------
   // watch:js
   // --------------------------
-  gulp.watch('./client/js/**/*.js', ['lint:js'], function() {
-    browserSync.reload();
-  });
+  gulp.watch('./client/js/**/*.js', ['reload-js']);
 
   gutil.log(gutil.colors.bgGreen('Watching for changes...'));
 });
