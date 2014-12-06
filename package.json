@@ -1,7 +1,7 @@
 {
   "name": "generator-frigate",
   "version": "0.1.9",
-  "description": "Yeoman generator with browserify, libsass and livereload",
+  "description": "Yeoman generator with browserify, libsass and BrowserSync",
   "repository": {
     "type": "git",
     "url": "https://github.com/lincolnloop/generator-frigate"
@@ -10,7 +10,7 @@
     "yeoman-generator",
     "browserify",
     "sass",
-    "livereload"
+    "BrowserSync"
   ],
   "dependencies": {
     "yeoman-generator": "^0.17.7",
