@@ -24,12 +24,6 @@ module.exports = generators.Base.extend({
       default : 'https://github.com/lincolnloop/' + this.appname
     }, {
       type: 'confirm',
-      name: 'connect',
-      value: 'includeStaticServer',
-      message: 'Would you like to use connect as a basic server?',
-      default: false
-    }, {
-      type: 'confirm',
       name: 'notifications',
       value: 'systemNotifications',
       message: 'Do you want to enable system notifications on errors?',
@@ -41,7 +35,6 @@ module.exports = generators.Base.extend({
       default : 'build/'
     }], function (answers) {
       this.github = answers.github;
-      this.includeStaticServer = answers.connect;
       this.systemNotifications = answers.notifications;
       this.buildDest = answers.buildDest;
       done();

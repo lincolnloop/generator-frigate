@@ -29,12 +29,6 @@ var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
 // testing/mocha
 var mocha = require('gulp-mocha');
-<% if (includeStaticServer) { %>
-// connect server
-var connect = require('gulp-connect');
-var pushState = require('grunt-connect-pushstate/lib/utils').pushState;
-var cookies = require('cookies');
-<% } %>
 
 // gulp build --production
 var production = !!argv.production;
