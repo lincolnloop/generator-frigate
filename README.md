@@ -43,4 +43,4 @@ Run:
 yo frigate
 ```
 
-Run `gulp` for asset watching/compiling with LiveReload support (and the optional static server) and `gulp build --production` for a production-ready build
+Run `gulp` for asset watching/compiling with BrowserSync support and `gulp build --production` for a production-ready build
