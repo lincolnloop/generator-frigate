@@ -155,7 +155,6 @@ var tasks = {
         './client/js/**/*.js'
       ]).pipe(jshint())
       .pipe(jshint.reporter(stylish))
-      .pipe(jshint.reporter('fail'))
       .on('error', function() {
         beep();
       });
@@ -200,7 +199,7 @@ gulp.task('browser-sync', function() {
 gulp.task('reload-sass', ['sass'], function(){
   browserSync.reload();
 });
-gulp.task('reload-js', ['lint:js'], function(){
+gulp.task('reload-js', ['browserify'], function(){
   browserSync.reload();
 });
 
@@ -232,7 +231,7 @@ gulp.task('watch', ['assets', 'templates', 'sass', 'browserify', 'browser-sync']
   // --------------------------
   // watch:js
   // --------------------------
-  gulp.watch('./client/js/**/*.js', ['reload-js']);
+  gulp.watch('./client/js/**/*.js', ['lint:js', 'reload-js']);
 
   gutil.log(gutil.colors.bgGreen('Watching for changes...'));
 });

@@ -34,3 +34,10 @@ You should see a red square with rounded corners in the upper left. Now we'll ma
     }
 
 Once you save, check your browser and confirm the square has changed color.
+
+Now open *client/js/index.js* in your editor, append the following line to the end of the file, and save::
+
+  document.write('Look! A square.');
+
+The text should show up on the page below the square.
+
