@@ -75,6 +75,23 @@ These are tasks that compose ``build`` and ``watch``, but they can run individua
 BrowserSync
 ------------
 
+ `BrowserSync`_ is a tool that keeps multiple browsers across multiple devices in sync while you develop your project. Frigate's Gulp configuration manages BrowserSync for all your project files. All connected clients to your project will update automatically whenever project files change.
+
+  .. _BrowserSync: http://www.browsersync.io/
+
+
+Connecting Multiple Devices
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When you run ``gulp`` (or ``gulp watch``), you should see a line in the startup output similar to::
+
+  [BS] External URL: http://192.168.1.2:3000
+
+Any browser, emulator, or device that can connect to that address on your local network will stay updated automatically as you make changes to files in your project.*
+
+*Browser behaviors can differ; mobile browers might require manual refresh after device goes into power saving mode.
+
+
 Working with SASS
 -----------------
 
