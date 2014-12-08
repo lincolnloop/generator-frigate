@@ -16,7 +16,7 @@
   * Browserify
   * SASS and CSS auto-prefixing
   * CSS and JavaScript minification
-  * LiveReload
+  * BrowserSync
   * Image Optimization (via OptiPNG, pngquant, jpegtran and gifsicle)
 * Built-in static server (optional)
 
