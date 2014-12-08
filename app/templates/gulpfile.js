@@ -16,8 +16,8 @@ var sass = require('gulp-sass');
 var postcss = require('gulp-postcss');
 var autoprefixer = require('autoprefixer-core');
 var sourcemaps = require('gulp-sourcemaps');
-// livereload
-var livereload = require('gulp-livereload');
+// BrowserSync
+var browserSync = require('browser-sync');
 // js
 var watchify = require('watchify');
 var browserify = require('browserify');
@@ -29,12 +29,6 @@ var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
 // testing/mocha
 var mocha = require('gulp-mocha');
-<% if (includeStaticServer) { %>
-// connect server
-var connect = require('gulp-connect');
-var pushState = require('grunt-connect-pushstate/lib/utils').pushState;
-var cookies = require('cookies');
-<% } %>
 
 // gulp build --production
 var production = !!argv.production;
@@ -146,8 +140,7 @@ var tasks = {
         .pipe(source('build.js'))
         .pipe(gulpif(production, buffer()))
         .pipe(gulpif(production, uglify()))
-        .pipe(gulp.dest('<%= buildDest %>js/'))
-        .pipe(gulpif(!production && !build, livereload()));
+        .pipe(gulp.dest('<%= buildDest %>js/'));
     };
     bundler.on('update', rebundle);
     return rebundle();
@@ -162,7 +155,6 @@ var tasks = {
         './client/js/**/*.js'
       ]).pipe(jshint())
       .pipe(jshint.reporter(stylish))
-      .pipe(jshint.reporter('fail'))
       .on('error', function() {
         beep();
       });
@@ -190,8 +182,29 @@ var tasks = {
         'reporter': 'spec'
       })
     );
-  }
+  },
+
+
 };
+
+gulp.task('browser-sync', function() {
+    browserSync({
+        server: {
+            baseDir: "./build"
+        },
+        port: process.env.PORT || 3000
+    });
+});
+
+gulp.task('reload-sass', ['sass'], function(){
+  browserSync.reload();
+});
+gulp.task('reload-js', ['browserify'], function(){
+  browserSync.reload();
+});
+gulp.task('reload-templates', ['templates'], function(){
+  browserSync.reload();
+});
 
 // --------------------------
 // CUSTOMS TASKS
@@ -211,56 +224,22 @@ gulp.task('test', tasks.test);
 // --------------------------
 // DEV/WATCH TASK
 // --------------------------
-gulp.task('watch', ['assets', 'templates', 'sass', 'browserify'], function() {
-<% if (includeStaticServer) { %>
-  // --------------------------
-  // Connect server
-  // --------------------------
-  connect.server({
-    'root': '<%= buildDest %>',
-    'port': process.env.PORT || 8000,
-    middleware: function(connect) {
-      return [
-        // setup the config settings in a cookie
-        cookies.express(),
-        function (req, res, next) {
-          next();
-        },
-        // enable pushState support
-        // every url will load the root (index.html)
-        pushState(),
-        connect.static('<%= buildDest %>')
-      ];
-    }
-  });
-<% } %>
-  // --------------------------
-  // Livereload
-  // --------------------------
-  livereload.listen(35729, function(err){
-    gutil.log(gutil.colors.bgGreen('... Listening on 35729...'));
-    if (err) {
-      return console.log(err);
-    }
-  });
-
-  // --------------------------
-  // Livereload:CSS
-  // --------------------------
-  gulp.watch('<%= buildDest %>css/**/*.css').on('change', function(event) {
-    gutil.log(gutil.colors.bgBlue('Reloading css...'));
-      livereload.changed(event.path);
-  });
+gulp.task('watch', ['assets', 'templates', 'sass', 'browserify', 'browser-sync'], function() {
 
   // --------------------------
   // watch:sass
   // --------------------------
-  gulp.watch('./client/scss/**/*.scss', ['sass']);
+  gulp.watch('./client/scss/**/*.scss', ['reload-sass']);
 
   // --------------------------
-  // Linting
+  // watch:js
   // --------------------------
-  gulp.watch('./client/js/**/*.js', ['lint:js']);
+  gulp.watch('./client/js/**/*.js', ['lint:js', 'reload-js']);
+
+  // --------------------------
+  // watch:html
+  // --------------------------
+  gulp.watch('./templates/**/*.html', ['reload-templates']);
 
   gutil.log(gutil.colors.bgGreen('Watching for changes...'));
 });
