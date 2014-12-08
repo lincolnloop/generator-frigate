@@ -21,6 +21,7 @@ Config files:
 Directories:
 
 * client
+* styleguide
 * templates
 
 Support directories:
@@ -97,6 +98,25 @@ Working with SASS
 
 Building the Styleguide
 -----------------------
+
+Frigate uses a Ruby tool called `hologram`_ for building a style guide using comments in the source files. Frigate includes a Gemfile and a hologram configuration file.
+
+If you use Ruby `bundler`_, try::
+
+    bundle
+    bundle exec hologram
+
+Otherwise::
+
+    gem install hologram
+    hologram
+
+After ``hologram`` runs, you should have an *index.html* file in your styleguide directory.
+
+
+.. _hologram: http://trulia.github.io/hologram/
+.. _bundler: http://bundler.io/
+
 
 Configuration and Overriding Defaults
 -------------------------------------
