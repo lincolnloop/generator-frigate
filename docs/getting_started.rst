@@ -101,9 +101,6 @@ Building the Styleguide
 Configuration and Overriding Defaults
 -------------------------------------
 
-* Connect port
-* LiveReload port
-
 Using Frigate in Your Traditional Backend Project
 -------------------------------------------------
 
