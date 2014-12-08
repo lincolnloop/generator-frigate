@@ -49,6 +49,7 @@ module.exports = generators.Base.extend({
   app: function() {
     this.directory('client');
     this.directory('gulp');
+    this.directory('styleguide');
     this.template('gulpfile.js', 'gulpfile.js');
     this.template('templates/index.html', 'templates/index.html');
     this.src.copy('Gemfile', 'Gemfile');
