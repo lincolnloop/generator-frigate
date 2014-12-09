@@ -10,28 +10,6 @@ gulp.task('watch', ['setWatch', 'browserSync'], function() {
     gulp.watch(config.sass.src,   ['sass']);
 //  gulp.watch(config.images.src, ['images']);
     gulp.watch(config.templates.src, ['templates']);
+    gulp.watch(config.clientDir + '/js/**', ['jshint', 'test']);
 });
 
-
-// // --------------------------
-// // DEV/WATCH TASK
-// // --------------------------
-// gulp.task('watch', ['assets', 'templates', 'sass', 'browserify', 'browser-sync'], function() {
-
-//   // --------------------------
-//   // watch:sass
-//   // --------------------------
-//   gulp.watch('./client/scss/**/*.scss', ['reload-sass']);
-
-//   // --------------------------
-//   // watch:js
-//   // --------------------------
-//   //gulp.watch('./client/js/**/*.js', ['lint:js', 'reload-js']);
-
-//   // --------------------------
-//   // watch:html
-//   // --------------------------
-//   gulp.watch('./templates/**/*.html', ['reload-templates']);
-
-//   gutil.log(gutil.colors.bgGreen('Watching for changes...'));
-// });

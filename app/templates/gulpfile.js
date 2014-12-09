@@ -10,9 +10,6 @@ var sass = require('gulp-sass');
 var postcss = require('gulp-postcss');
 var autoprefixer = require('autoprefixer-core');
 var sourcemaps = require('gulp-sourcemaps');
-// linting
-var jshint = require('gulp-jshint');
-var stylish = require('jshint-stylish');
 
 var beep = require('./gulp/util/beep');
 var handleError = require('./gulp/util/handleErrors');
@@ -60,20 +57,6 @@ var tasks = {
       // give it a file and save
       .pipe(gulp.dest('<%= buildDest %>css'));
   },
-  // --------------------------
-  // linting
-  // --------------------------
-  lintjs: function() {
-    return gulp.src([
-        'gulpfile.js',
-        './client/js/index.js',
-        './client/js/**/*.js'
-      ]).pipe(jshint())
-      .pipe(jshint.reporter(stylish))
-      .on('error', function() {
-        beep();
-      });
-  },
 
 
 };
@@ -81,7 +64,6 @@ var tasks = {
 
 // individual tasks
 gulp.task('sass', tasks.sass);
-gulp.task('lint:js', tasks.lintjs);
 
 
 
