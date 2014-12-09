@@ -40,6 +40,7 @@ var gulp         = require('gulp');
 var handleErrors = require('../util/handleErrors');
 var source       = require('vinyl-source-stream');
 var config       = require('../config').browserify;
+var gutil        = require('gulp-util');
 
 gulp.task('browserify', function(callback) {
 
@@ -76,6 +77,8 @@ gulp.task('browserify', function(callback) {
     };
 
     if(global.isWatching) {
+
+      gutil.log('Enabling Watchify for Browserify');
       // Wrap with watchify and rebundle on changes
       bundler = watchify(bundler);
       // Rebundle on update

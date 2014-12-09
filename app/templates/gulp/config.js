@@ -2,21 +2,27 @@ var dest = "./build";
 var src = './client';
 
 module.exports = {
-  /*
+
   browserSync: {
+    // server: {
+    //   // We're serving the src folder as well
+    //   // for sass sourcemap linking
+    //   baseDir: [dest, src]
+    // },
     server: {
-      // We're serving the src folder as well
-      // for sass sourcemap linking
-      baseDir: [dest, src]
+        baseDir: dest
     },
     files: [
       dest + "/**",
       // Exclude Map files
       "!" + dest + "/**.map"
-    ]
+    ],
+    port: process.env.PORT || 3000
   },
+
   sass: {
-    src: src + "/sass/*.{sass,scss}",
+    src: src + "/scss/*.{sass,scss}",
+    /*
     dest: dest,
     settings: {
       // Required if you want to use SASS syntax
@@ -24,16 +30,21 @@ module.exports = {
       sourceComments: 'map',
       imagePath: '/images' // Used by the image-url helper
     }
+    */
   },
+  /*
   images: {
     src: src + "/images/**",
     dest: dest + "/images"
   },
-  markup: {
-    src: src + "/htdocs/**",
+  */
+
+  templates: {
+    // *Note* templates don't use the common src
+    src: "./templates/**",
     dest: dest
   },
-  */
+
   browserify: {
     // Enable source maps
     debug: true,
@@ -46,7 +57,7 @@ module.exports = {
     // bundle config in the list below
     bundleConfigs: [{
       entries: src + '/js/index.js',
-      dest: dest,
+      dest: dest + '/js',
       outputName: 'app.js'
     }]
   }

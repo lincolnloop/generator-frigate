@@ -2,22 +2,14 @@
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var del = require('del');
-var uglify = require('gulp-uglify');
 var gulpif = require('gulp-if');
-var exec = require('child_process').exec;
 
-<% if (systemNotifications) { %>
-var notify = require('gulp-notify');
-<% } %>
-var buffer = require('vinyl-buffer');
 var argv = require('yargs').argv;
 // sass
 var sass = require('gulp-sass');
 var postcss = require('gulp-postcss');
 var autoprefixer = require('autoprefixer-core');
 var sourcemaps = require('gulp-sourcemaps');
-// BrowserSync
-var browserSync = require('browser-sync');
 // image optimization
 var imagemin = require('gulp-imagemin');
 // linting
@@ -36,34 +28,17 @@ var production = !!argv.production;
 var build = argv._.length ? argv._[0] === 'build' : false;
 var watch = argv._.length ? argv._[0] === 'watch' : true;
 
-// ----------------------------
-// Error notification methods
-// ----------------------------
 
 // --------------------------
 // CUSTOM TASK METHODS
 // --------------------------
 var tasks = {
   // --------------------------
-  // Delete build folder
-  // --------------------------
-  clean: function(cb) {
-    del(['<%= buildDest %>'], cb);
-  },
-  // --------------------------
   // Copy static assets
   // --------------------------
   assets: function() {
     return gulp.src('./client/assets/**/*')
       .pipe(gulp.dest('<%= buildDest %>assets/'));
-  },
-  // --------------------------
-  // HTML
-  // --------------------------
-  // html templates (when using the connect server)
-  templates: function() {
-    gulp.src('templates/*.html')
-      .pipe(gulp.dest('<%= buildDest %>'));
   },
   // --------------------------
   // SASS (libsass)
@@ -76,7 +51,7 @@ var tasks = {
         sourceComments: !production,
         outputStyle: production ? 'compressed' : 'nested'
       }))
-      .on('error', handleError('SASS'))
+      .on('error', handleError)
       // generate .maps
       .pipe(gulpif(!production, sourcemaps.write({
         'includeContent': false,
@@ -138,71 +113,15 @@ var tasks = {
 
 };
 
-gulp.task('browser-sync', function() {
-    browserSync({
-        server: {
-            baseDir: "./build"
-        },
-        port: process.env.PORT || 3000
-    });
-});
 
-gulp.task('reload-sass', ['sass'], function(){
-  browserSync.reload();
-});
-gulp.task('reload-js', ['browserify'], function(){
-  browserSync.reload();
-});
-gulp.task('reload-templates', ['templates'], function(){
-  browserSync.reload();
-});
-
-// --------------------------
-// CUSTOMS TASKS
-// --------------------------
-gulp.task('clean', tasks.clean);
-// for production we require the clean method on every individual task
-var req = build ? ['clean'] : [];
 // individual tasks
-gulp.task('templates', req, tasks.templates);
-gulp.task('assets', req, tasks.assets);
-gulp.task('sass', req, tasks.sass);
-gulp.task('browserify', req, tasks.browserify);
+gulp.task('assets', tasks.assets);
+gulp.task('sass', tasks.sass);
 gulp.task('lint:js', tasks.lintjs);
 gulp.task('optimize', tasks.optimize);
 gulp.task('test', tasks.test);
 
-// --------------------------
-// DEV/WATCH TASK
-// --------------------------
-gulp.task('watch', ['assets', 'templates', 'sass', 'browserify', 'browser-sync'], function() {
 
-  // --------------------------
-  // watch:sass
-  // --------------------------
-  gulp.watch('./client/scss/**/*.scss', ['reload-sass']);
-
-  // --------------------------
-  // watch:js
-  // --------------------------
-  gulp.watch('./client/js/**/*.js', ['lint:js', 'reload-js']);
-
-  // --------------------------
-  // watch:html
-  // --------------------------
-  gulp.watch('./templates/**/*.html', ['reload-templates']);
-
-  gutil.log(gutil.colors.bgGreen('Watching for changes...'));
-});
-
-// build task
-gulp.task('build', [
-  'clean',
-  'templates',
-  'assets',
-  'sass',
-  'browserify'
-]);
 
 var requireDir = require('require-dir');
 

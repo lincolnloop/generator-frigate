@@ -1,3 +1,5 @@
+var exec = require('child_process').exec;
+
 module.exports = function() {
   var os = require('os');
   var file = 'error.wav';
