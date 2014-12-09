@@ -18,10 +18,6 @@ var autoprefixer = require('autoprefixer-core');
 var sourcemaps = require('gulp-sourcemaps');
 // BrowserSync
 var browserSync = require('browser-sync');
-// js
-var watchify = require('watchify');
-var browserify = require('browserify');
-var source = require('vinyl-source-stream');
 // image optimization
 var imagemin = require('gulp-imagemin');
 // linting
@@ -29,6 +25,9 @@ var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
 // testing/mocha
 var mocha = require('gulp-mocha');
+
+var beep = require('./gulp/util/beep');
+var handleError = require('./gulp/util/handleErrors');
 
 // gulp build --production
 var production = !!argv.production;
@@ -40,30 +39,7 @@ var watch = argv._.length ? argv._[0] === 'watch' : true;
 // ----------------------------
 // Error notification methods
 // ----------------------------
-var beep = function() {
-  var os = require('os');
-  var file = 'gulp/error.wav';
-  if (os.platform() === 'linux') {
-    // linux
-    exec("aplay " + file);
-  } else {
-    // mac
-    console.log("afplay " + file);
-    exec("afplay " + file);
-  }
-};
-var handleError = function(task) {
-  return function(err) {
-    beep();
-    <% if (systemNotifications) { %>
-      notify.onError({
-        message: task + ' failed, check the logs..',
-        sound: false
-      })(err);
-    <% } %>
-    gutil.log(gutil.colors.bgRed(task + ' error:'), gutil.colors.red(err));
-  };
-};
+
 // --------------------------
 // CUSTOM TASK METHODS
 // --------------------------
@@ -119,31 +95,6 @@ var tasks = {
       // write sourcemaps to a specific directory
       // give it a file and save
       .pipe(gulp.dest('<%= buildDest %>css'));
-  },
-  // --------------------------
-  // Browserify
-  // --------------------------
-  browserify: function() {
-    var bundler = browserify('./client/js/index.js', {
-      debug: !production,
-      cache: {}
-    });
-    // determine if we're doing a build
-    // and if so, bypass the livereload
-    var build = argv._.length ? argv._[0] === 'build' : false;
-    if (watch) {
-      bundler = watchify(bundler);
-    }
-    var rebundle = function() {
-      return bundler.bundle()
-        .on('error', handleError('Browserify'))
-        .pipe(source('build.js'))
-        .pipe(gulpif(production, buffer()))
-        .pipe(gulpif(production, uglify()))
-        .pipe(gulp.dest('<%= buildDest %>js/'));
-    };
-    bundler.on('update', rebundle);
-    return rebundle();
   },
   // --------------------------
   // linting
@@ -252,5 +203,10 @@ gulp.task('build', [
   'sass',
   'browserify'
 ]);
+
+var requireDir = require('require-dir');
+
+// Require all tasks in gulp/tasks, including subfolders
+requireDir('./gulp/tasks', { recurse: true });
 
 gulp.task('default', ['watch']);
