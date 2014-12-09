@@ -32,12 +32,17 @@ module.exports = {
     }
     */
   },
-  /*
-  images: {
-    src: src + "/images/**",
-    dest: dest + "/images"
+
+  assets: {
+    src: "./client/assets/**/*.{gif,jpg,png,svg}",
+    dest: dest,
+    imagemin: {
+      progressive: true,
+      svgoPlugins: [{removeViewBox: false}],
+      // png optimization
+      optimizationLevel: 1
+    }
   },
-  */
 
   templates: {
     // *Note* templates don't use the common src

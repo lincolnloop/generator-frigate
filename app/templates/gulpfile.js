@@ -10,13 +10,9 @@ var sass = require('gulp-sass');
 var postcss = require('gulp-postcss');
 var autoprefixer = require('autoprefixer-core');
 var sourcemaps = require('gulp-sourcemaps');
-// image optimization
-var imagemin = require('gulp-imagemin');
 // linting
 var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
-// testing/mocha
-var mocha = require('gulp-mocha');
 
 var beep = require('./gulp/util/beep');
 var handleError = require('./gulp/util/handleErrors');
@@ -33,13 +29,6 @@ var watch = argv._.length ? argv._[0] === 'watch' : true;
 // CUSTOM TASK METHODS
 // --------------------------
 var tasks = {
-  // --------------------------
-  // Copy static assets
-  // --------------------------
-  assets: function() {
-    return gulp.src('./client/assets/**/*')
-      .pipe(gulp.dest('<%= buildDest %>assets/'));
-  },
   // --------------------------
   // SASS (libsass)
   // --------------------------
@@ -85,41 +74,14 @@ var tasks = {
         beep();
       });
   },
-  // --------------------------
-  // Optimize asset images
-  // --------------------------
-  optimize: function() {
-    return gulp.src('./client/assets/**/*.{gif,jpg,png,svg}')
-      .pipe(imagemin({
-        progressive: true,
-        svgoPlugins: [{removeViewBox: false}],
-        // png optimization
-        optimizationLevel: production ? 3 : 1
-      }))
-      .pipe(gulp.dest('./client/assets/'));
-  },
-  // --------------------------
-  // Testing with mocha
-  // --------------------------
-  test: function() {
-    return gulp.src('./client/**/*test.js', {read: false})
-      .pipe(mocha({
-        'ui': 'bdd',
-        'reporter': 'spec'
-      })
-    );
-  },
 
 
 };
 
 
 // individual tasks
-gulp.task('assets', tasks.assets);
 gulp.task('sass', tasks.sass);
 gulp.task('lint:js', tasks.lintjs);
-gulp.task('optimize', tasks.optimize);
-gulp.task('test', tasks.test);
 
 
 
