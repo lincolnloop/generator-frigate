@@ -3,6 +3,8 @@ var src = './client';
 
 module.exports = {
 
+  clientDir: src,
+
   browserSync: {
     // server: {
     //   // We're serving the src folder as well
@@ -22,15 +24,14 @@ module.exports = {
 
   sass: {
     src: src + "/scss/*.{sass,scss}",
-    /*
-    dest: dest,
+    dest: dest + "/css",
     settings: {
       // Required if you want to use SASS syntax
       // See https://github.com/dlmanning/gulp-sass/issues/81
       sourceComments: 'map',
+      //TODO fix path
       imagePath: '/images' // Used by the image-url helper
     }
-    */
   },
 
   assets: {
