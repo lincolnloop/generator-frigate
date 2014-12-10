@@ -36,8 +36,9 @@ module.exports = {
   },
 
   assets: {
-    src: "./client/assets/**/*.{gif,jpg,png,svg}",
+    src: "./client/assets/**",
     dest: dest,
+    processImages: /\.(gif|jpg|jpeg|tiff|png)$/i,
     imagemin: {
       progressive: true,
       svgoPlugins: [{removeViewBox: false}],
