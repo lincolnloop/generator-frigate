@@ -7,7 +7,9 @@ var gulp  = require('gulp');
 var config= require('../config');
 
 gulp.task('watch', ['setWatch', 'build', 'browserSync'], function() {
-    gulp.watch(config.sass.src,   ['sass']);
+    gulp.watch(config.sass.src,   ['sass'], function(event) {
+      console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
+    });
 //  gulp.watch(config.images.src, ['images']);
     gulp.watch(config.templates.src, ['templates']);
     gulp.watch(config.clientDir + '/js/**', ['jshint', 'test']);

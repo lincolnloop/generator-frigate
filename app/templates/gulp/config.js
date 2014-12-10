@@ -6,11 +6,6 @@ module.exports = {
   clientDir: src,
 
   browserSync: {
-    // server: {
-    //   // We're serving the src folder as well
-    //   // for sass sourcemap linking
-    //   baseDir: [dest, src]
-    // },
     server: {
         baseDir: dest
     },
@@ -20,6 +15,12 @@ module.exports = {
       "!" + dest + "/**.map"
     ],
     port: process.env.PORT || 3000
+
+    /*
+    // DEBUG output options
+    logFileChanges: true,
+    logLevel: "debug"
+    */
   },
 
   sass: {

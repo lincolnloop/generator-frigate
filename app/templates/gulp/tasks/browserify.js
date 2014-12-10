@@ -1,28 +1,3 @@
-/* ORIGINAL
-
-  browserify: function() {
-    var bundler = browserify('./client/js/index.js', {
-      debug: !production,
-      cache: {}
-    });
-    // determine if we're doing a build
-    // and if so, bypass the livereload
-    var build = argv._.length ? argv._[0] === 'build' : false;
-    if (watch) {
-      bundler = watchify(bundler);
-    }
-    var rebundle = function() {
-      return bundler.bundle()
-        .on('error', handleError('Browserify'))
-        .pipe(source('build.js'))
-        .pipe(gulpif(production, buffer()))
-        .pipe(gulpif(production, uglify()))
-        .pipe(gulp.dest('<%= buildDest %>js/'));
-    };
-    bundler.on('update', rebundle);
-    return rebundle();
-  },
-*/
 /* browserify task
    ---------------
    Bundle javascripty things with browserify!
