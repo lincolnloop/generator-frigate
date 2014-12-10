@@ -1,16 +1,8 @@
 var gulp = require('gulp');
 var mocha = require('gulp-mocha');
-
-// --------------------------
-// Testing with mocha
-// --------------------------
+var config = require('../config').test;
 
 gulp.task('test', function() {
-    return gulp.src('./client/**/*test.js', {read: false})
-        //TODO config
-      .pipe(mocha({
-        'ui': 'bdd',
-        'reporter': 'spec'
-      })
-    );
+    return gulp.src(config.src, {read: false})
+      .pipe(mocha(config.mochaOptions));
 });

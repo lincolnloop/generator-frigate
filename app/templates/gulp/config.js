@@ -67,5 +67,21 @@ module.exports = {
       dest: dest + '/js',
       outputName: 'app.js'
     }]
+  },
+
+  jshint: {
+    src: [
+      'gulpfile.js',
+      './client/js/index.js',
+      './client/js/**/*.js'
+    ]
+  },
+
+  test: {
+    src: './client/**/*test.js',
+    mochaOptions: {
+      'ui': 'bdd',
+      'reporter': 'spec'
+    }
   }
 };
