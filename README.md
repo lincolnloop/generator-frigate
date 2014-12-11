@@ -14,7 +14,7 @@
 * Application structure and setup that works for single page apps and web sites.
 * Full featured `Gulp` setup with:
   * Browserify
-  * SASS and CSS auto-prefixing
+  * Sass and CSS auto-prefixing
   * CSS and JavaScript minification
   * BrowserSync
   * Image Optimization (via OptiPNG, pngquant, jpegtran and gifsicle)

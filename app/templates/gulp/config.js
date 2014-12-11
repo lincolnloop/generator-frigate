@@ -27,7 +27,7 @@ module.exports = {
     src: src + "/scss/*.{sass,scss}",
     dest: dest + "/css",
     settings: {
-      // Required if you want to use SASS syntax
+      // Required if you want to use Sass syntax
       // See https://github.com/dlmanning/gulp-sass/issues/81
       sourceComments: 'map',
       //TODO fix path

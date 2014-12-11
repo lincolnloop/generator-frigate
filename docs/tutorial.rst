@@ -41,12 +41,12 @@ Make Some Project Changes
 
 Your project is running. It is time to make some changes to various types of files and confirm that Frigate's automatic update and notification tools are working.
 
-There are two main directories you will work out of. The ``client`` directory is where the project's application code and assets live. ``templates`` are where template files live. When changes are made to files in these directories, Gulp will do any processing that needs to happen on them (such as converting SASS to CSS) and copy them to the project's build directory. All content you see when viewing the project's site comes from the project's build directory. The build directory is considered volatile and can be emptied if needed. Running ``gulp`` (or explicitly ``gulp build`` or ``gulp watch``) builds all of the project's files ready for serving. You can make changes directly in the build directory and the site should update, but in general it is best to do all work in the working directories (client and templates).
+There are two main directories you will work out of. The ``client`` directory is where the project's application code and assets live. ``templates`` are where template files live. When changes are made to files in these directories, Gulp will do any processing that needs to happen on them (such as converting Sass to CSS) and copy them to the project's build directory. All content you see when viewing the project's site comes from the project's build directory. The build directory is considered volatile and can be emptied if needed. Running ``gulp`` (or explicitly ``gulp build`` or ``gulp watch``) builds all of the project's files ready for serving. You can make changes directly in the build directory and the site should update, but in general it is best to do all work in the working directories (client and templates).
 
-Editing SASS
+Editing Sass
 ------------
 
-Our starting content is a simple page containing red square with rounded corners. Now we'll make a change to the SASS and confirm that everything updates. In an editor, open *client/scss/screen.scss* and modify the background color::
+Our starting content is a simple page containing red square with rounded corners. Now we'll make a change to the Sass and confirm that everything updates. In an editor, open *client/scss/screen.scss* and modify the background color::
 
     #main {
       margin: 50px;

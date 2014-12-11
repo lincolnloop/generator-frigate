@@ -46,7 +46,7 @@ Usually you'll work with a few primary tasks that will take of most of your work
 
 **build**
 
-The ``build`` task preps your project for serving. It cleans the build directory, processes SASS into CSS, and moves static files (css, images, js and templates) to the build directory. After running ``build``, your project should be ready for serving by a web server configured to serve content from the project build directory.
+The ``build`` task preps your project for serving. It cleans the build directory, processes Sass into CSS, and moves static files (css, images, js and templates) to the build directory. After running ``build``, your project should be ready for serving by a web server configured to serve content from the project build directory.
 
 **watch**
 
@@ -93,7 +93,7 @@ Any browser, emulator, or device that can connect to that address on your local 
 *Browser behaviors can differ; mobile browers might require manual refresh after device goes into power saving mode.
 
 
-Working with SASS
+Working with Sass
 -----------------
 
 Building the Styleguide
