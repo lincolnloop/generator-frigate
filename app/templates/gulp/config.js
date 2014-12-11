@@ -1,5 +1,5 @@
-var dest = "./build";
-var src = './client';
+var dest = "build";
+var src = "client";
 
 module.exports = {
 
@@ -36,7 +36,7 @@ module.exports = {
   },
 
   assets: {
-    src: "./client/assets/**",
+    src: src + "/assets/**",
     dest: dest,
     processImages: /\.(gif|jpg|jpeg|tiff|png)$/i,
     imagemin: {
@@ -49,7 +49,7 @@ module.exports = {
 
   templates: {
     // *Note* templates don't use the common src
-    src: "./templates/**",
+    src: "templates/**",
     dest: dest
   },
 
@@ -64,7 +64,7 @@ module.exports = {
     // A separate bundle will be generated for each
     // bundle config in the list below
     bundleConfigs: [{
-      entries: src + '/js/index.js',
+      entries: './' + src + '/js/index.js',
       dest: dest + '/js',
       outputName: 'app.js'
     }]
