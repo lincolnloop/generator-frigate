@@ -1,5 +1,8 @@
+/* TYPOGRAPHY */
 $base-font: 'Varela Round', sans-serif;
 $support-font: 'Source Sans Pro', sans-serif;
+
+/* COLORS */
 
 // Generic Grays/Whites/Darks
 $dark-gray: #555;
@@ -9,8 +12,10 @@ $whitesmoke: #fdfdfd;
 $white: #fff;
 
 // Primary palette colors
+// Blues, reds, greens, etc.
 
 // Application of palette
+$bg-color: $white;
 $text-color: $dark-gray;
 $brand-color: $whitesmoke;
 $brand-color-alt: $white;
@@ -18,9 +23,8 @@ $brand-color-alt: $white;
 $highlight-color: $gray;
 $error-color: darken(red, 15%);
 
-// Style Globals
-$btn-bottom-width: 2px;
-$border-radius: 2px;
-$shadow-border-size: 4px;
-
+/* FORM CONFIGS */
 $input-padding: .5em 1em;
+
+/* GLOBAL STYLES */
+$border-radius: 2px;

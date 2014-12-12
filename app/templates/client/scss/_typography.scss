@@ -9,10 +9,9 @@
  *  http://webdesign.tutsplus.com/articles/a-web-designers-typographic-boilerplate--webdesign-15234
  */
 
-/* FOUNDATION */
-
 html {
   font-family: $base-font;
+  font-size: 100%;
 }
 
 body {
@@ -79,6 +78,6 @@ blockquote:before {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: $support-font;
+  font-family: $base-font;
   font-weight: normal;
 }

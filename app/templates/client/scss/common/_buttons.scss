@@ -3,12 +3,6 @@
  *
  */
 
-/* DEPENDENCIES */
-
-%round-btn {
-  border-radius: 50%;
-}
-
 // We only allow for inactive color
 @mixin button-colors($bg-color, $color: $white, $visited-color: $color) {
   $dark-color: darken($bg-color, 20%);
