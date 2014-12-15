@@ -1,31 +1,46 @@
 var dest = "build";
 var src = "client";
 
+var sassSource = src + "/scss/*.{sass,scss}";
+var sassDestination = dest + "/css";
+var assetsSource = src + "/assets/**";
+var assetsDestination = dest;
+var templatesSource = "templates/**";
+var templatesDestination = dest;
+
 module.exports = {
 
   clientDir: src,
 
-  browserSync: {
-    server: {
-        baseDir: dest
-    },
-    files: [
-      dest + "/**",
-      // Exclude Map files
-      "!" + dest + "/**.map"
-    ],
-    port: process.env.PORT || 3000
+  browserSyncMode: "server",
+  browserSyncDebug: false,
 
-    /*
-    // DEBUG output options
-    logFileChanges: true,
-    logLevel: "debug"
-    */
+  browserSync: {
+    all: {
+      port: process.env.PORT || 3000
+    },
+    debug: {
+      logFileChanges: true,
+      logLevel: "debug"
+    },
+    serverOptions: {
+      server: {
+          baseDir: dest
+      },
+      files: [
+        dest + "/**",
+        // Exclude Map files
+        "!" + dest + "/**.map"
+      ],
+    },
+    proxyOptions: {
+      proxy: 'localhost:8000'
+    }
   },
 
   sass: {
-    src: src + "/scss/*.{sass,scss}",
-    dest: dest + "/css",
+    src: sassSource,
+    dest: sassDestination,
     settings: {
       // Required if you want to use Sass syntax
       // See https://github.com/dlmanning/gulp-sass/issues/81
@@ -36,8 +51,8 @@ module.exports = {
   },
 
   assets: {
-    src: src + "/assets/**",
-    dest: dest,
+    src: assetsSource,
+    dest: assetsDestination,
     processImages: /\.(gif|jpg|jpeg|tiff|png)$/i,
     imagemin: {
       progressive: true,
@@ -49,8 +64,8 @@ module.exports = {
 
   templates: {
     // *Note* templates don't use the common src
-    src: "templates/**",
-    dest: dest
+    src: templatesSource,
+    dest: templatesDestination
   },
 
   browserify: {
