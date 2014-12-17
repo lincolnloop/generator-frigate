@@ -5,6 +5,8 @@ var sassSource = src + "/scss/*.{sass,scss}";
 var sassDestination = dest + "/css";
 var assetsSource = src + "/assets/**";
 var assetsDestination = dest;
+var imagesSource = src + "/assets/img/**/*.{gif,jpg,jpeg,tiff,png,svg}";
+var imagesDestination = src + "/assets/img";
 var templatesSource = "templates/**";
 var templatesDestination = dest;
 
@@ -54,12 +56,14 @@ module.exports = {
     src: assetsSource,
     dest: assetsDestination,
     processImages: /\.(gif|jpg|jpeg|tiff|png)$/i,
-    imagemin: {
+    imageminOptions: {
       progressive: true,
       svgoPlugins: [{removeViewBox: false}],
       // png optimization
       optimizationLevel: 1
-    }
+    },
+    imgSrc: imagesSource,
+    imgDest: imagesDestination
   },
 
   templates: {
