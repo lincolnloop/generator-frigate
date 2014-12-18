@@ -8,7 +8,7 @@ module.exports = generators.Base.extend({
 
     // welcome message
     if (!this.options['skip-welcome-message']) {
-      this.log(chalk.magenta(
+      this.log(chalk.green(
         "Let's create a new app with React, Underscore, Amygdala and Ampersand.js"
       ));
     }
@@ -30,5 +30,10 @@ module.exports = generators.Base.extend({
     this.template('_Router.js', path.join(this.appPath, 'Router.js'));
     this.template('_example.test.js', path.join(this.appPath, 'test/'+ this.appPath +'test.js'));
     this.src.copy('HelloView.js', path.join(this.appPath, 'HelloView.js'));
+  },
+  end: function() {
+    this.log(chalk.green("App Created.. initialize your router on `index.js` to finish the setup:"));
+    this.log(chalk.magenta("  var " + this.appPath + "Router = require('"+ this.appPath +"/Router.js')"));
+    this.log(chalk.magenta("  new " + this.appPath + "Router();"));
   }
 });
