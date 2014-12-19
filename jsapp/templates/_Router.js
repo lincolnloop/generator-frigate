@@ -10,7 +10,7 @@ var AppRouter = Router.extend({
   // App Router
   //
   routes: {
-    '/<%= appPath %>/': 'index'
+    '<%= appPath %>/': 'index'
   },
 
   index: function() {
