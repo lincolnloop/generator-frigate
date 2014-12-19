@@ -29,8 +29,16 @@ module.exports = generators.Base.extend({
       choices: [
         {'value': 'bs', 'name': 'BrowserSync Basic Server'},
         {'value': 'bs-ps', 'name': 'BrowserSync Server with pushState support'},
-        {'value': 'tp', 'name': 'Third Party Server (default: localhost:8000)'},
+        {'value': 'tp', 'name': 'Third Party Server (apache, nginx, django runserver, etc...)'},
       ]
+    }, {
+      type: 'input',
+      name: 'serverAddress',
+      message: 'What address/port is your server running at?',
+      default: 'localhost:8000',
+      when: function (props) {
+        return props.server === 'tp';
+      }
     }, {
       type: 'confirm',
       name: 'notifications',
@@ -46,6 +54,7 @@ module.exports = generators.Base.extend({
       this.systemNotifications = answers.notifications;
       this.browserSyncMode = answers.server.substring(0, 2) === 'bs' ? 'server' : 'proxy';
       this.browserSyncPushState = answers.server === 'bs-ps';
+      this.serverAddress = answers.serverAddress ? answers.serverAddress : 'localhost:8000';
       this.buildDest = answers.buildDest;
       done();
     }.bind(this));
@@ -61,7 +70,9 @@ module.exports = generators.Base.extend({
     this.directory('gulp');
     this.directory('styleguide');
     this.template('_gulp.config.js', 'gulp/config.js');
-    this.template('templates/_index.html', 'templates/index.html');
+    if (this.browserSyncMode === 'server') {
+      this.template('templates/_index.html', 'templates/index.html');
+    }
     this.src.copy('gulpfile.js', 'gulpfile.js');
     this.src.copy('Gemfile', 'Gemfile');
     this.src.copy('Gemfile.lock', 'Gemfile.lock');

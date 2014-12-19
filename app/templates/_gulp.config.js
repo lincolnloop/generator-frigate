@@ -38,7 +38,7 @@ module.exports = {
       ],
     },
     proxyOptions: {
-      proxy: 'localhost:8000'
+      proxy: '<%= serverAddress %>'
     }
   },
 
