@@ -1,3 +1,4 @@
+<% if (browserSyncPushState) { %>var historyApiFallback = require('connect-history-api-fallback');<% } %>
 var dest = "build";
 var src = "client";
 
@@ -14,7 +15,7 @@ module.exports = {
 
   clientDir: src,
 
-  browserSyncMode: "server",
+  browserSyncMode: "<%= browserSyncMode %>",
   browserSyncDebug: false,
 
   browserSync: {
@@ -27,7 +28,8 @@ module.exports = {
     },
     serverOptions: {
       server: {
-          baseDir: dest
+        baseDir: dest<% if (browserSyncPushState) { %>,
+        middleware: [historyApiFallback]<% } %>
       },
       files: [
         dest + "/**",
@@ -36,7 +38,7 @@ module.exports = {
       ],
     },
     proxyOptions: {
-      proxy: 'localhost:8000'
+      proxy: '<%= serverAddress %>'
     }
   },
 
