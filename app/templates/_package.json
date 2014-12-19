@@ -18,6 +18,11 @@
       "reactify"
     ]
   },
+  "dependencies": {
+    "loglevel": "~1.2.0",
+    "react": "~0.12.1",
+    "ampersand-router": "^1.0.6"
+  },
   "devDependencies": {
     "browserify": "^6.2.0",
     "browser-sync": "^1.7.2",
@@ -34,10 +39,7 @@
     "lodash": "^2.4.1",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.0.0",
-    "ampersand-router": "^1.0.6",
-    "react": "~0.12.1",
     "reactify": "~0.17.0",
-    "loglevel": "~1.2.0",
     <% if (systemNotifications) { %>"gulp-notify": "^2.0.1",<% } %>
     "watchify": "^2.1.1",
     "gulp-if": "^1.2.5",
