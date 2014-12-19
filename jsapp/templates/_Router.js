@@ -2,6 +2,7 @@
 
 var Router = require('ampersand-router');
 var log = require('loglevel');
+var React = require('react');
 var View = require('./HelloView');
 
 var AppRouter = Router.extend({
@@ -14,6 +15,7 @@ var AppRouter = Router.extend({
 
   index: function() {
     log.info('<%= appPath %>:index');
+    React.render(View(), document.getElementById('main'));
   }
 });
 
