@@ -68,15 +68,11 @@ module.exports = generators.Base.extend({
   app: function() {
     this.directory('client');
     this.directory('gulp');
-    this.directory('styleguide');
     this.template('_gulp.config.js', 'gulp/config.js');
     if (this.browserSyncMode === 'server') {
       this.template('templates/_index.html', 'templates/index.html');
     }
     this.src.copy('gulpfile.js', 'gulpfile.js');
-    this.src.copy('Gemfile', 'Gemfile');
-    this.src.copy('Gemfile.lock', 'Gemfile.lock');
-    this.src.copy('hologram_config.yml', 'hologram_config.yml');
   },
   install: function() {
     this.npmInstall();
