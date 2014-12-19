@@ -45,7 +45,6 @@ module.exports = generators.Base.extend({
       this.github = answers.github;
       this.systemNotifications = answers.notifications;
       this.browserSyncMode = answers.server.substring(0, 2) === 'bs' ? 'server' : 'proxy';
-      console.log(this.browserSyncMode, answers.server, answers.server.substring(0, 2));
       this.browserSyncPushState = answers.server === 'bs-ps';
       this.buildDest = answers.buildDest;
       done();
