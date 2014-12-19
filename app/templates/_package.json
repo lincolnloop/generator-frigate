@@ -40,6 +40,7 @@
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.0.0",
     "reactify": "~0.17.0",
+    <% if (browserSyncPushState) { %>"connect-history-api-fallback": "0.0.5",<% } %>
     <% if (systemNotifications) { %>"gulp-notify": "^2.0.1",<% } %>
     "watchify": "^2.1.1",
     "gulp-if": "^1.2.5",
