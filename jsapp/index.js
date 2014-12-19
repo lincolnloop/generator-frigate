@@ -33,7 +33,7 @@ module.exports = generators.Base.extend({
   },
   end: function() {
     this.log(chalk.green("App Created.. initialize your router on `index.js` to finish the setup:"));
-    this.log(chalk.magenta("  var " + this.appPath + "Router = require('"+ this.appPath +"/Router.js')"));
+    this.log(chalk.magenta("  var " + this.appPath + "Router = require('./"+ this.appPath +"/Router.js')"));
     this.log(chalk.magenta("  new " + this.appPath + "Router();"));
   }
 });
