@@ -11,7 +11,8 @@
 
 html {
   font-family: $base-font;
-  font-size: 100%;
+  font-size: $base-font-size;
+  line-height: $base-line-height;
 }
 
 body {
@@ -27,15 +28,11 @@ abbr,
 acronym,
 blockquote,
 code,
-dir,
 kbd,
-listing,
-plaintext,
 q,
 samp,
 tt,
-var,
-xmp {
+var {
   // http://meyerweb.com/eric/thoughts/2012/12/17/where-to-avoid-css-hyphenation
   hyphens: none;
 }
@@ -47,10 +44,7 @@ pre code {
   white-space: pre-wrap;
 }
 
-pre {
-  white-space: pre;
-}
-
+pre,
 code {
   white-space: pre;
 }

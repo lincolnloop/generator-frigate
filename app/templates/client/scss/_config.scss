@@ -1,11 +1,15 @@
 /* TYPOGRAPHY */
-$base-font: 'Varela Round', sans-serif;
-$support-font: 'Source Sans Pro', sans-serif;
+$base-font: 'Source Sans Pro', sans-serif;
+$support-font: $base-font;
+$monospace-font: 'Source Code Pro', monospace;
+
+$base-font-size: 100%;
+$base-line-height: 1.5;
 
 /* COLORS */
 
 // Generic Grays/Whites/Darks
-$dark-gray: #555;
+$dark-gray: #333;
 $gray: #797979;
 $light-gray: #ccc;
 $whitesmoke: #fdfdfd;
