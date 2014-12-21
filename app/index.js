@@ -23,9 +23,25 @@ module.exports = generators.Base.extend({
       message : 'Github repo url',
       default : 'https://github.com/lincolnloop/' + this.appname
     }, {
+      type: 'list',
+      name: 'server',
+      message: 'What type of server would you like to use?',
+      choices: [
+        {'value': 'bs', 'name': 'BrowserSync Basic Server'},
+        {'value': 'bs-ps', 'name': 'BrowserSync Server with pushState support'},
+        {'value': 'tp', 'name': 'Third Party Server (apache, nginx, django runserver, etc...)'},
+      ]
+    }, {
+      type: 'input',
+      name: 'serverAddress',
+      message: 'What address/port is your server running at?',
+      default: 'localhost:8000',
+      when: function (props) {
+        return props.server === 'tp';
+      }
+    }, {
       type: 'confirm',
       name: 'notifications',
-      value: 'systemNotifications',
       message: 'Do you want to enable system notifications on errors?',
       default: true
     }, {
@@ -36,6 +52,9 @@ module.exports = generators.Base.extend({
     }], function (answers) {
       this.github = answers.github;
       this.systemNotifications = answers.notifications;
+      this.browserSyncMode = answers.server.substring(0, 2) === 'bs' ? 'server' : 'proxy';
+      this.browserSyncPushState = answers.server === 'bs-ps';
+      this.serverAddress = answers.serverAddress ? answers.serverAddress : 'localhost:8000';
       this.buildDest = answers.buildDest;
       done();
     }.bind(this));
@@ -49,12 +68,11 @@ module.exports = generators.Base.extend({
   app: function() {
     this.directory('client');
     this.directory('gulp');
-    this.directory('styleguide');
-    this.template('gulpfile.js', 'gulpfile.js');
-    this.template('templates/index.html', 'templates/index.html');
-    this.src.copy('Gemfile', 'Gemfile');
-    this.src.copy('Gemfile.lock', 'Gemfile.lock');
-    this.src.copy('hologram_config.yml', 'hologram_config.yml');
+    this.template('_gulp.config.js', 'gulp/config.js');
+    if (this.browserSyncMode === 'server') {
+      this.template('templates/_index.html', 'templates/index.html');
+    }
+    this.src.copy('gulpfile.js', 'gulpfile.js');
   },
   install: function() {
     this.npmInstall();

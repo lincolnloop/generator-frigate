@@ -22,3 +22,8 @@ var log = require('loglevel');
 
 // initialize all routers here:
 // new <AppName>Router();
+
+// start history so routers are matched
+app.history.start({
+  'pushState': true
+});
