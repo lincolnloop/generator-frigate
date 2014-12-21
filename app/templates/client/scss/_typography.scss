@@ -9,10 +9,21 @@
  *  http://webdesign.tutsplus.com/articles/a-web-designers-typographic-boilerplate--webdesign-15234
  */
 
+@function strip-units($number) {
+  @return $number / ($number * 0 + 1);
+}
+
+@mixin font-size($font-size, $line-height: true) {
+ font-size: $font-size / $base-font-size;
+
+ @if $line-height == true {
+   line-height: strip-units(ceil($font-size / $base-line-height) * ($base-line-height / $font-size));
+ }
+}
+
 html {
   font-family: $base-font;
   font-size: $base-font-size;
-  line-height: $base-line-height;
 }
 
 body {
@@ -21,6 +32,7 @@ body {
   text-rendering: optimizeLegibility;
   word-wrap: break-word;
 
+  line-height: $base-line-height;
   color: $text-color;
 }
 
@@ -35,6 +47,13 @@ tt,
 var {
   // http://meyerweb.com/eric/thoughts/2012/12/17/where-to-avoid-css-hyphenation
   hyphens: none;
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: $monospace-font;
 }
 
 pre code {
@@ -71,7 +90,25 @@ blockquote:before {
   padding-right: .4em;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: $base-font;
-  font-weight: normal;
+h1, h2, h3, h4 {
+  font-weight: inherit;
+
+  // We never want massive line-heights on headers
+  line-height: 1.2;
+}
+
+h1 {
+  @include font-size(ms(4), false);
+}
+
+h2 {
+  @include font-size(ms(3), false);
+}
+
+h3 {
+  @include font-size(ms(2), false);
+}
+
+h4 {
+  @include font-size(ms(1), false);
 }

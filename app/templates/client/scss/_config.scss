@@ -1,16 +1,18 @@
 /* TYPOGRAPHY */
-$base-font: 'Source Sans Pro', sans-serif;
-$support-font: $base-font;
+$base-font: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+$support-font: $base-font; // Often a serif
 $monospace-font: 'Source Code Pro', monospace;
 
-$base-font-size: 100%;
-$base-line-height: 1.5;
+$base-font-size: 1.125rem;
+$base-line-height: 1.45;
+$base-ratio: $augmented-fourth; // Augment scale, 1.41421
 
 /* COLORS */
 
 // Generic Grays/Whites/Darks
-$dark-gray: #333;
-$gray: #797979;
+$black: #222;
+$dark-gray: #444;
+$gray: #999;
 $light-gray: #ccc;
 $whitesmoke: #fdfdfd;
 $white: #fff;
@@ -32,3 +34,17 @@ $input-padding: .5em 1em;
 
 /* GLOBAL STYLES */
 $border-radius: 2px;
+
+
+/*
+  **********************
+  IGNORE BELOW THIS LINE
+
+  The following section just passing various from
+  this file to various dependencies.
+  **********************
+*/
+
+// Pass typography variables to modular-scale
+$ms-base: $base-font-size;
+$ms-ratio: $base-ratio;

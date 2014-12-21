@@ -1,15 +1,18 @@
-@import "config";
+/* EXTERNAL DEPENDENCIES */
 
 @import "vendor/normalize";
-@import "vendor/flex";
+@import "vendor/modular-scale";
+
+/* CONFIG AND OVERRIDES */
+@import "config";
+
+@import "shims";
 
 @import "utils/mixins";
 @import "utils/placeholders";
 
-@import "shims";
 @import "typography";
 
-@import "common/layout";
 @import "common/header";
 @import "common/footer";
 
