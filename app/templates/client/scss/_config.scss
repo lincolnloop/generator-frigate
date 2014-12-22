@@ -3,9 +3,15 @@ $base-font: 'Source Sans Pro', Helvetica, Arial, sans-serif;
 $support-font: $base-font; // Often a serif
 $monospace-font: 'Source Code Pro', monospace;
 
-$base-font-size: 1.125rem;
-$base-line-height: 1.45;
-$base-ratio: $major-third; // Augment scale, 1.41421
+$base-font-size: 1em; // Equals 100%, 1rem, or roughly 16px
+$base-line-height: 1.5;
+$rhythm-unit: $base-line-height / 2; // Makes math a lot easier
+
+// Use modular-scale to get our scaling
+$base-ratio: $major-third; // Major third, 1.25
+
+$show-guide: true; // Show a baseline guide
+$guide-color: #f1e8fd;
 
 /* COLORS */
 

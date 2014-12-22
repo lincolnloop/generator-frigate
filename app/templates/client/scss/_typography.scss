@@ -7,34 +7,106 @@
  *
  *  A good walkthrough of some of this can be found here:
  *  http://webdesign.tutsplus.com/articles/a-web-designers-typographic-boilerplate--webdesign-15234
+ *  Scaling and rhythm based on this excellent work:
+ *  https://www.inkling.com/blog/2014/05/precision-baselines-sass-ebook-design/
  */
 
+// Remove all units from a number
 @function strip-units($number) {
-  @return $number / ($number * 0 + 1);
+ @return $number / ($number * 0 + 1);
 }
 
-@mixin font-size($font-size, $line-height: true) {
- font-size: ($font-size / $base-font-size) * 1rem;
+ // Return an em value based on the $base-font-size or contextual size. Thanks @ijy https://gist.github.com/ijy/1441967
+@function em($target, $context: $base-font-size) {
+ @if $target == 0 { @return 0 }
+ @return strip-units($target) / strip-units($context) + 0em;
+}
 
- @if $line-height == true {
-   line-height: strip-units(ceil($font-size / $base-line-height) * ($base-line-height / $font-size));
+// Used to provide a grid based on our typography settings
+@mixin baseline-guide {
+ position: relative;
+
+ &::after {
+   position: absolute;
+   z-index: -1;
+
+   top:0;
+   bottom: 0;
+
+   display: block;
+
+   width: 100%;
+   height: auto;
+
+   background: linear-gradient($guide-color 1px, transparent 1px);
+   background-size: 100% em($base-line-height);
+
+   content: "";
+ }
+}
+
+// Set the font-size and line-height based on our defaults
+@mixin font-size($font-size, $context: $base-font-size, $line-height: false){
+ font-size: ($font-size / $context) * 1em;
+
+ @if $line-height == true{
+   line-height:ceil($font-size / $rhythm-unit) * ($rhythm-unit / $font-size);
  }
 }
 
 html {
   font-family: $base-font;
   font-size: $base-font-size;
+  line-height: (strip-units($base-line-height) / strip-units($base-font-size));
+
+  @if $show-guide == true {
+    @include baseline-guide;
+  }
 }
 
 body {
+  margin: em($base-line-height);
+
   -webkit-font-smoothing: antialiased;
   hyphens: auto;
   text-rendering: optimizeLegibility;
   word-wrap: break-word;
 
-  line-height: $base-line-height;
   color: $text-color;
 }
+
+/* ESTABLISH HEADERS */
+
+// Base header sizes off of scale.
+// Use ms(x) via modular-scale for these.
+$headings: (
+  h1: ms(5),
+  h2: ms(4),
+  h3: ms(3),
+  h4: ms(2),
+  h5: ms(1),
+  h6: ms(1),
+);
+
+// Apply each header style
+@each $heading, $font-size in $headings {
+  #{$heading} {
+    @include font-size($font-size, $line-height: true);
+    margin-top: 0;
+    // Add margin bottom equal to 1 rhythm unit
+    margin-bottom: em($base-line-height, $font-size);
+  }
+}
+
+h1, h2, h3, h4 {
+  font-weight: inherit;
+}
+
+p {
+  margin-bottom: em($base-line-height);
+}
+
+/* SETUP AND RESET EVERYTHING ELSE */
 
 abbr,
 acronym,
@@ -88,27 +160,4 @@ blockquote:before {
   content: "\201C";
   display: inline-block;
   padding-right: .4em;
-}
-
-h1, h2, h3, h4 {
-  font-weight: inherit;
-
-  // We never want massive line-heights on headers
-  line-height: 1.2;
-}
-
-h1 {
-  @include font-size(ms(4), false);
-}
-
-h2 {
-  @include font-size(ms(3), false);
-}
-
-h3 {
-  @include font-size(ms(2), false);
-}
-
-h4 {
-  @include font-size(ms(1), false);
 }
