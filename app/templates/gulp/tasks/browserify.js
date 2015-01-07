@@ -8,6 +8,7 @@
    See browserify.bundleConfigs in gulp/config.js
 */
 
+var browserSync  = require('browser-sync');
 var browserify   = require('browserify');
 var watchify     = require('watchify');
 var bundleLogger = require('../util/bundleLogger');
@@ -51,7 +52,7 @@ gulp.task('browserify', function(callback) {
         .on('end', reportFinished);
     };
 
-    if(global.isWatching) {
+    if (global.isWatching) {
 
       gutil.log('Enabling Watchify for Browserify');
       // Wrap with watchify and rebundle on changes
@@ -64,12 +65,17 @@ gulp.task('browserify', function(callback) {
       // Log when bundling completes
       bundleLogger.end(bundleConfig.outputName);
 
-      if(bundleQueue) {
+      if (bundleQueue) {
         bundleQueue--;
-        if(bundleQueue === 0) {
+        if (bundleQueue === 0) {
           // If queue is empty, tell gulp the task is complete.
           // https://github.com/gulpjs/gulp/blob/master/docs/API.md#accept-a-callback
           callback();
+          // reload browserSync on changes
+          browserSync.reload();
+        } else {
+          // reload browserSync on changes
+          browserSync.reload();
         }
       }
     };
