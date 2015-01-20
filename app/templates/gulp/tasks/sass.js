@@ -1,17 +1,21 @@
 var gulp         = require('gulp');
+var gulpif       = require('gulp-if');
 var browserSync  = require('browser-sync');
 var sass         = require('gulp-sass');
 var sourcemaps   = require('gulp-sourcemaps');
 var handleErrors = require('../util/handleErrors');
 var config       = require('../config').sass;
 var autoprefixer = require('gulp-autoprefixer');
+// production flag for sourcemaps
+var argv = require('yargs').argv;
+var production = !!argv.production;
 
 gulp.task('sass', function () {
   return gulp.src(config.src)
-    .pipe(sourcemaps.init())
+    .pipe(gulpif(!production, sourcemaps.init()))
     .pipe(sass(config.settings))
     .on('error', handleErrors)
-    .pipe(sourcemaps.write())
+    .pipe(gulpif(!production, sourcemaps.write()))
     .pipe(autoprefixer({ browsers: ['last 2 version'] }))
     .pipe(gulp.dest(config.dest))
     .pipe(browserSync.reload({stream:true}));
