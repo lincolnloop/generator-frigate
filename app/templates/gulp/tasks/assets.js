@@ -12,6 +12,5 @@ gulp.task('assets', function() {
 
   return gulp.src(config.src)
     .pipe(cached('assets')) // Ignore unchanged files
-    .pipe(gulpIf(!global.isBuilding, imagemin(config.imageminOptions))) // Optimize
     .pipe(gulp.dest(config.dest));
 });

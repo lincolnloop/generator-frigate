@@ -77,9 +77,6 @@ module.exports = {
   },
 
   browserify: {
-    // Enable source maps
-    debug: true,
-
     // Additional file extentions to make optional
     //extensions: ['.coffee', '.hbs'],
     extensions: [],
