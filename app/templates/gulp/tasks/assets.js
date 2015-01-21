@@ -6,10 +6,6 @@ var config     = require('../config').assets;
 var gutil      = require('gulp-util');
 
 gulp.task('assets', function() {
-
-  // Don't process images in build mode.
-  gutil.log('build flag: ', global.isBuilding);
-
   return gulp.src(config.src)
     .pipe(cached('assets')) // Ignore unchanged files
     .pipe(gulp.dest(config.dest));

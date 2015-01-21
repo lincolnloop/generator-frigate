@@ -5,11 +5,13 @@
 
 var gulp  = require('gulp');
 var config= require('../config');
+var startBrowserSync = require('../util/startBrowserSync');
 
-gulp.task('watch', ['setWatch', 'setBuild', 'build', 'browserSync'], function() {
-    gulp.watch(config.sass.src,   ['sass']);
-    gulp.watch(config.assets.src, ['assets']);
-    gulp.watch(config.templates.src, ['templates']);
-    gulp.watch(config.clientDir + '/js/**', ['jshint', 'test']);
+gulp.task('watch', ['build'], function() {
+  startBrowserSync();
+  gulp.watch(config.sass.src,   ['sass']);
+  gulp.watch(config.assets.src, ['assets']);
+  gulp.watch(config.templates.src, ['templates']);
+  gulp.watch(config.clientDir + '/js/**', ['jshint', 'test']);
 });
 

@@ -19,8 +19,8 @@ var config       = require('../config').browserify;
 var gutil        = require('gulp-util');
 // build/production check
 var argv = require('yargs').argv;
-var build = argv._.length ? argv._[0] === 'build' : false;
 var production = !!argv.production;
+var isWatching = require('../util/isWatching');
 
 gulp.task('browserify', function(callback) {
 
@@ -56,8 +56,7 @@ gulp.task('browserify', function(callback) {
         .on('end', reportFinished);
     };
 
-    if (global.isWatching) {
-
+    if (isWatching) {
       gutil.log('Enabling Watchify for Browserify');
       // Wrap with watchify and rebundle on changes
       bundler = watchify(bundler);

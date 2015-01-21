@@ -20,6 +20,4 @@ var startBrowserSync = function() {
     }
 };
 
-gulp.task('browserSync', function() {
-    startBrowserSync();
-});
+module.exports = startBrowserSync;
