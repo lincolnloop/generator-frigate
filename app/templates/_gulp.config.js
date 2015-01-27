@@ -2,7 +2,7 @@
 var dest = "build";
 var src = "client";
 
-var sassSource = src + "/scss/*.{sass,scss}";
+var sassSource = src + "/scss/**/*.{sass,scss}";
 var sassDestination = dest + "/css";
 var assetsSource = src + "/assets/**";
 var assetsDestination = dest + "/assets";
