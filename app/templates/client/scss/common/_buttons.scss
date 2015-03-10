@@ -34,7 +34,6 @@
 
   @include button-colors($color, $color);
   border: 2px solid $color;
-  border-bottom-width: $btn-bottom-width;
 
   &,
   &:hover {
