@@ -11,6 +11,8 @@
 var browserSync  = require('browser-sync');
 var browserify   = require('browserify');
 var watchify     = require('watchify');
+var es6ify       = require('es6ify');
+var reactify     = require('reactify');
 var bundleLogger = require('../util/bundleLogger');
 var gulp         = require('gulp');
 var handleErrors = require('../util/handleErrors');
@@ -31,13 +33,15 @@ gulp.task('browserify', function(callback) {
     var bundler = browserify({
       // Required watchify args
       cache: {}, packageCache: {}, fullPaths: true,
-      // Specify the entry point of your app
-      entries: bundleConfig.entries,
       // Add file extentions to make optional in your requires
       extensions: config.extensions,
       // Enable source maps if not production!
       debug: production ? false : true
-    });
+    }).add(es6ify.runtime)
+    .transform(reactify)
+    .transform(es6ify.configure(/^(?!.*node_modules)+.+\.js*$/))
+    // Specify the entry point of your app
+    .require(bundleConfig.entries, { entry: true });
 
     var bundle = function() {
       // Log when bundling starts

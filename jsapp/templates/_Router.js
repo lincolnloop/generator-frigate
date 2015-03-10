@@ -13,7 +13,7 @@ var AppRouter = Router.extend({
     '<%= appPath %>/': 'index'
   },
 
-  index: function() {
+  index() {
     log.info('<%= appPath %>:index');
     React.render(View(), document.getElementById('main'));
   }

@@ -15,7 +15,7 @@
   },
   "browserify": {
     "transform": [
-      "reactify"
+      ["reactify", {"es6": true}]
     ]
   },
   "dependencies": {
@@ -37,6 +37,7 @@
     "gulp-postcss": "^2.0.0",
     "gulp-util": "^3.0.1",
     "lodash": "^2.4.1",
+    "es6ify": "^1.6.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.0.0",
     "reactify": "~0.17.0",
