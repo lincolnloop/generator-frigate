@@ -1,6 +1,6 @@
 {
   "name": "generator-frigate",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "Yeoman generator with browserify, libsass, React and BrowserSync",
   "repository": {
     "type": "git",
@@ -13,8 +13,8 @@
     "BrowserSync"
   ],
   "dependencies": {
-    "yeoman-generator": "^0.17.7",
-    "chalk": "^0.5.1"
+    "chalk": "^0.5.1",
+    "yeoman-generator": "^0.17.7"
   },
   "bugs": {
     "url": "https://github.com/lincolnloop/generator-frigate/issues"

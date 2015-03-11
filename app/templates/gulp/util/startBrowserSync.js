@@ -1,4 +1,4 @@
-var _ = require('lodash');
+var assign = require('lodash.assign');
 var browserSync = require('browser-sync');
 var gulp        = require('gulp');
 var gutil       = require('gulp-util');
@@ -9,7 +9,7 @@ if (config.browserSyncDebug){
     _.assign(bsConfig, config.browserSync.debug);
 }
 var mode = config.browserSyncMode + "Options";
-_.assign(bsConfig, config.browserSync[mode]);
+assign(bsConfig, config.browserSync[mode]);
 
 var startBrowserSync = function() {
     if (global.isBuilding === true){

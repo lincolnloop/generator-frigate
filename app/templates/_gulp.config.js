@@ -1,4 +1,6 @@
-<% if (browserSyncPushState) { %>var historyApiFallback = require('connect-history-api-fallback');<% } %>
+var argv = require('yargs').argv;
+var production = !!argv.production;
+<% if (browserSyncPushState) { %>var historyApiFallback = !production ? require('connect-history-api-fallback') : null;<% } %>
 var dest = "build";
 var src = "client";
 
