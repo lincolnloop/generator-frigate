@@ -6,6 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "scripts": {
+    "postinstall": "make clean && make -j4 all"
+  },
   "repository": {
     "type": "git",
     "url": "<%= github %>"
@@ -15,14 +18,29 @@
   },
   "browserify": {
     "transform": [
-      ["reactify", {"es6": true}]
+      ["reactify", {"es6": true}],
+      ["es6ify"]
     ]
   },
   "dependencies": {
+    "autoprefixer": "^5.1.0",
     "browserify": "^6.2.0",
     "loglevel": "~1.2.0",
     "react": "~0.12.1",
     "ampersand-router": "^1.0.6",
+    "lodash.assign": "^3.0.0",
+    "es6ify": "^1.6.0",
+    "reactify": "~0.17.0",
+    "pretty-hrtime": "~0.2.1",
+    "uglifyjs": "^2.4.10",
+    "node-sass": "git+https://github.com/sass/node-sass.git#v3.0.0-beta.7"
+  },
+  "devDependencies": {
+    "gulp-imagemin": "^1.2.1",
+    "browser-sync": "^1.7.2",
+    <% if (browserSyncPushState) { %>"connect-history-api-fallback": "0.0.5",<% } %>
+    <% if (systemNotifications) { %>"gulp-notify": "^2.0.1",<% } %>
+    "watchify": "^2.1.1",
     "chalk": "^0.5.1",
     "gulp": "^3.8.10",
     "gulp-autoprefixer": "^2.0.0",
@@ -30,24 +48,13 @@
     "gulp-sourcemaps": "^1.2.7",
     "gulp-postcss": "^2.0.0",
     "gulp-util": "^3.0.1",
-    "lodash.assign": "^3.0.0",
-    "es6ify": "^1.6.0",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.0.0",
-    "reactify": "~0.17.0",
+    "gulp-mocha": "^1.1.1",
     "gulp-if": "^1.2.5",
     "gulp-jshint": "^1.9.0",
     "jshint-stylish": "^1.0.0",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.0.0",
     "yargs": "^1.3.2",
-    "gulp-mocha": "^1.1.1",
-    "require-dir": "^0.1.0",
-    "pretty-hrtime": "~0.2.1"
-  },
-  "devDependencies": {
-    "gulp-imagemin": "^1.2.1",
-    "browser-sync": "^1.7.2",
-    <% if (browserSyncPushState) { %>"connect-history-api-fallback": "0.0.5",<% } %>
-    <% if (systemNotifications) { %>"gulp-notify": "^2.0.1",<% } %>
-    "watchify": "^2.1.1"
+    "require-dir": "^0.1.0"
   }
 }
