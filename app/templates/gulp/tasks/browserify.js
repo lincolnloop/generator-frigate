@@ -19,9 +19,8 @@ var handleErrors = require('../util/handleErrors');
 var source       = require('vinyl-source-stream');
 var config       = require('../config').browserify;
 var gutil        = require('gulp-util');
-// build/production check
+// build check
 var argv = require('yargs').argv;
-var production = !!argv.production;
 var isWatching = require('../util/isWatching');
 
 gulp.task('browserify', function(callback) {
@@ -35,8 +34,8 @@ gulp.task('browserify', function(callback) {
       cache: {}, packageCache: {}, fullPaths: true,
       // Add file extentions to make optional in your requires
       extensions: config.extensions,
-      // Enable source maps if not production!
-      debug: production ? false : true
+      // Enable source maps
+      debug: true
     }).add(es6ify.runtime)
     .transform(reactify)
     .transform(es6ify.configure(/^(?!.*node_modules)+.+\.js*$/))
