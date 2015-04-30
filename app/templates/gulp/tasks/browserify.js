@@ -28,19 +28,19 @@ gulp.task('browserify', function(callback) {
   var bundleQueue = config.bundleConfigs.length;
 
   var browserifyThis = function(bundleConfig) {
-
     var bundler = browserify({
       // Required watchify args
-      cache: {}, packageCache: {}, fullPaths: true,
+      cache: {},
+      packageCache: {},
+      // full system file paths, disable for production
+      fullPaths: true,
       // Add file extentions to make optional in your requires
       extensions: config.extensions,
       // Enable source maps
       debug: true
-    }).add(es6ify.runtime)
-    .transform(reactify)
-    .transform(es6ify.configure(/^(?!.*node_modules)+.+\.js*$/))
+    })
     // Specify the entry point of your app
-    .require(bundleConfig.entries, { entry: true });
+    .require(bundleConfig.entries, {entry: true});
 
     var bundle = function() {
       // Log when bundling starts

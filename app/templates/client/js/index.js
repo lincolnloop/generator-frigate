@@ -1,7 +1,9 @@
 "use strict";
 
-var app = require('./app');
+var app = require('./lib/app');
 var log = require('loglevel');
+
+var mainRouter = require('./main/Router');
 
 // Log level setup
 // if (config.debug) {
@@ -22,6 +24,7 @@ var log = require('loglevel');
 
 // initialize all routers here:
 // new <AppName>Router();
+new mainRouter();
 
 // start history so routers are matched
 app.history.start({
