@@ -3,7 +3,7 @@
 var Router = require('ampersand-router');
 var log = require('loglevel');
 var React = require('react');
-var View = require('./HelloView');
+var HelloView = require('./HelloView');
 
 var AppRouter = Router.extend({
   //
@@ -15,7 +15,7 @@ var AppRouter = Router.extend({
 
   index() {
     log.info('<%= appPath %>:index');
-    React.render(View(), document.getElementById('main'));
+    React.render(React.createElement(HelloView), document.getElementById('main'));
   }
 });
 

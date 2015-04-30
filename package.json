@@ -1,6 +1,6 @@
 {
   "name": "generator-frigate",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Yeoman generator with browserify, libsass, React and BrowserSync",
   "repository": {
     "type": "git",
