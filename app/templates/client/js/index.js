@@ -1,7 +1,7 @@
 "use strict";
 
 var app = require('./lib/app');
-var log = require('loglevel');
+// var log = require('loglevel');
 
 var mainRouter = require('./main/Router');
 
