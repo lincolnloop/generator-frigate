@@ -11,7 +11,6 @@
 var browserSync  = require('browser-sync');
 var browserify   = require('browserify');
 var watchify     = require('watchify');
-var es6ify       = require('es6ify');
 var reactify     = require('reactify');
 var bundleLogger = require('../util/bundleLogger');
 var gulp         = require('gulp');
