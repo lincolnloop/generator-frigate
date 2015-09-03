@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "scripts": {
-    "postinstall": "make clean && make -j4 all"
+    "postinstall": "make clean && make -j4 all",
+    "build": "npm run postinstall"
   },
   "repository": {
     "type": "git",
