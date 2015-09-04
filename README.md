@@ -43,7 +43,7 @@ Run:
 yo frigate
 ```
 
-Run `gulp` for asset watching/compiling with BrowserSync support and `gulp build --production` for a production-ready build
+Run `gulp` for asset watching/compiling with BrowserSync support and `npm run build` for a production-ready build
 
 ## Documentation
 
