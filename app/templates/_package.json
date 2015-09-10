@@ -21,7 +21,7 @@
     "transform": [["babelify", { "blacklist": ["regenerator"] }]]
   },
   "dependencies": {
-    "autoprefixer": "^5.1.0",
+    "postcss-cli": "^2.1.0",
     "browserify": "^11.0.1",
     "loglevel": "^1.2.0",
     "react": "~0.13.3",
