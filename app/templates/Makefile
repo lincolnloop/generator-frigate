@@ -20,7 +20,7 @@ build/css:
 
 css: build/css
 	$(NPM_BIN)/node-sass client/scss --output-style compressed -o build/css \
-	&& postcss --use autoprefixer --autoprefixer.browsers "last 2 versions" -d build/css/ build/css/*.css
+	&& $(NPM_BIN)/postcss --use autoprefixer --autoprefixer.browsers "last 2 versions" -d build/css/ build/css/*.css
 
 
 
