@@ -6,12 +6,8 @@ var src = "client";
 
 var sassSource = src + "/scss/**/*.{sass,scss}";
 var sassDestination = dest + "/css";
-var assetsSource = src + "/assets/**";
-var assetsDestination = dest + "/assets";
 var imagesSource = src + "/assets/img/**/*.{gif,jpg,jpeg,tiff,png,svg}";
 var imagesDestination = src + "/assets/img";
-var templatesSource = "templates/**";
-var templatesDestination = dest;
 
 module.exports = {
 
@@ -59,8 +55,6 @@ module.exports = {
   },
 
   assets: {
-    src: assetsSource,
-    dest: assetsDestination,
     processImages: /\.(gif|jpg|jpeg|tiff|png)$/i,
     imageminOptions: {
       progressive: true,
@@ -70,12 +64,6 @@ module.exports = {
     },
     imgSrc: imagesSource,
     imgDest: imagesDestination
-  },
-
-  templates: {
-    // *Note* templates don't use the common src
-    src: templatesSource,
-    dest: templatesDestination
   },
 
   browserify: {
