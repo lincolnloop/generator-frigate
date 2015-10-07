@@ -13,47 +13,6 @@ module.exports = {
 
   clientDir: src,
 
-  browserSyncMode: "<%= browserSyncMode %>",
-  browserSyncDebug: false,
-
-  browserSync: {
-    all: {
-      port: process.env.PORT || 3000,
-      // open browser window on start
-      open: false
-    },
-    debug: {
-      logFileChanges: true,
-      logLevel: "debug"
-    },
-    serverOptions: {
-      server: {
-        baseDir: dest<% if (browserSyncPushState) { %>,
-        middleware: [historyApiFallback]<% } %>
-      },
-      files: [
-        dest + "/**",
-        // Exclude Map files
-        "!" + dest + "/**.map"
-      ],
-    },
-    proxyOptions: {
-      proxy: '<%= serverAddress %>'
-    }
-  },
-
-  sass: {
-    src: sassSource,
-    dest: sassDestination,
-    settings: {
-      // Required if you want to use Sass syntax
-      // See https://github.com/dlmanning/gulp-sass/issues/81
-      sourceComments: 'map',
-      //TODO fix path
-      imagePath: '/images' // Used by the image-url helper
-    }
-  },
-
   assets: {
     processImages: /\.(gif|jpg|jpeg|tiff|png)$/i,
     imageminOptions: {
@@ -74,7 +33,7 @@ module.exports = {
     // A separate bundle will be generated for each
     // bundle config in the list below
     bundleConfigs: [{
-      entries: './' + src + '/js/index.js',
+      entries: './' + src + '/js/app.js',
       dest: dest + '/js',
       outputName: 'app.js'
     }]
@@ -83,7 +42,7 @@ module.exports = {
   jshint: {
     src: [
       'gulpfile.js',
-      './client/js/index.js',
+      './client/js/app.js',
       './client/js/**/*.js'
     ]
   },

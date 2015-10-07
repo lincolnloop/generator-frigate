@@ -14,11 +14,11 @@
     "optimize:images": "",
     "watch-sass": "./node_modules/.bin/node-sass client/scss -o build/css --source-map=true --source-map-contents=true --source-map-embed=true",
     "autoprefixer": "./node_modules/.bin/postcss --use autoprefixer --autoprefixer.browsers 'last 2 versions' -d build/css/ build/css/*.css -w",
-    "browser-sync": "./node_modules/.bin/browser-sync start --port=3000 --proxy=localhost:8000 --no-open --index=build/index.html",
-    "browser-sync-server": "./node_modules/.bin/browser-sync start --port=3000 --server --no-open --index=build/index.html",
-    "start": "npm run watch-sass & npm run browser-sync-server",
-    "build-sass": "./node_modules/.bin/node-sass client/scss --output-style compressed -o build/css",
-    "build": "npm run postinstall"
+    "browser-sync": "./node_modules/.bin/browser-sync start --config bs.config.js",
+    "start": "npm run watch-sass & npm run browser-sync",
+    "start-sass": "npm run watch-sass & npm run autoprefixer & npm run browser-sync",
+    "build": "npm run postinstall",
+    "build-sass": "./node_modules/.bin/node-sass client/scss --output-style compressed -o build/css"
   },
   "repository": {
     "type": "git",

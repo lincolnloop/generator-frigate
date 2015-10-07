@@ -69,6 +69,7 @@ module.exports = generators.Base.extend({
     this.directory('client');
     this.directory('gulp');
     this.template('_gulp.config.js', 'gulp/config.js');
+    this.template('_bs.config.js', 'bs.config.js');
     if (this.browserSyncMode === 'server') {
       this.template('templates/_index.html', 'templates/index.html');
     }
