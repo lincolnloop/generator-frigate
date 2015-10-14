@@ -1,4 +1,3 @@
-var dest = "build";
 <% if (browserSyncPushState) { %>var historyApiFallback = require('connect-history-api-fallback');<% } %>
 
 module.exports = {
@@ -15,7 +14,7 @@ module.exports = {
     "!build/**.map"
   ],
   server: {
-    baseDir: dest,
+    baseDir: ["build"<% if (browserSyncMode === "server") { %>, "templates"<% } %>],
     index: "index.html"
   }
 };
