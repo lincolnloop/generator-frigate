@@ -7,21 +7,28 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "scripts": {
-    "postinstall": "make && make -j4 all",
-    "clean": "rm -rf build/* && mkdir -p build",
+    "postinstall": "npm run build",
+    "clean": "rm -rf build/* && mkdir -p build/css && mkdir -p build/js",
     "assets": "ln -s ./client/assets build/assets",
     "optimize:images": "echo 'TODO",
+
+    "watch-js": "watchify client/js/app.js -o build/js/app.js --debug",
+    "build-js": "browserify client/js/app.js | uglifyjs -m -c warnings=false > build/js/app.js",
+    "build-js-dev": "browserify client/js/app.js -o client/js/app.js --debug",
+
     "watch-sass": "node-sass client/scss -o build/css --source-map=true --source-map-contents=true --source-map-embed=true -w",
-    "watch-sass-autoprefixer": "mkdir build/css && node-sass client/scss -o build/tmp/css && node-sass client/scss -o build/tmp/css --source-map=true --source-map-contents=true --source-map-embed=true -w & postcss --use autoprefixer --autoprefixer.browsers 'last 2 versions' -d build/css/ build/tmp/css/*.css -w",
-    "browser-sync": "browser-sync start --config bs.config.js",
-    "start": "npm run build && npm run watch-sass & npm run browser-sync",
-    "start-sass": "npm run watch-sass & npm run browser-sync",
-    "start-sass-autoprefixer": "npm run watch-sass-autoprefixer & npm run browser-sync",
-    "build": "npm run clean && npm run build-sass && npm run build-autoprefixer && npm run postinstall",
-    "build-dev": "npm run clean && npm run build-sass-dev && npm run build-autoprefixer && npm run postinstall",
+    "watch-sass-autoprefixer": "node-sass client/scss -o build/tmp/css && node-sass client/scss -o build/tmp/css --source-map=true --source-map-contents=true --source-map-embed=true -w & postcss --use autoprefixer --autoprefixer.browsers 'last 2 versions' -d build/css/ build/tmp/css/*.css -w",
     "build-sass": "node-sass client/scss --output-style compressed -o build/css",
     "build-sass-dev": "node-sass client/scss -o build/css --source-map=true --source-map-contents=true --source-map-embed=true",
-    "build-autoprefixer": "postcss --use autoprefixer --autoprefixer.browsers 'last 2 versions' -d build/css/ build/css/*.css"
+    "build-autoprefixer": "postcss --use autoprefixer --autoprefixer.browsers 'last 2 versions' -d build/css/ build/css/*.css",
+    "start-sass": "npm run watch-sass & npm run browser-sync",
+    "start-sass-autoprefixer": "npm run watch-sass-autoprefixer & npm run browser-sync",
+
+    "browser-sync": "browser-sync start --config bs.config.js",
+
+    "start": "npm run build && npm run watch-js & npm run watch-sass & npm run browser-sync",
+    "build": "npm run clean &&  npm run build-sass && npm run build-js && npm run build-autoprefixer",
+    "build-dev": "npm run clean && npm run build-sass-dev && npm run build-js-dev && npm run build-autoprefixer && npm run postinstall"
   },
   "repository": {
     "type": "git",
@@ -34,36 +41,19 @@
     "transform": [["babelify", { "blacklist": ["regenerator"] }]]
   },
   "dependencies": {
+    "autoprefixer": "^5.1.0",
     "postcss-cli": "^2.2.0",
     "browserify": "^11.0.1",
     "loglevel": "^1.2.0",
     "react": "~0.13.3",
     "babelify": "^6.3.0",
     "ampersand-router": "^1.0.7",
-    "lodash.assign": "^3.0.0",
     "reactify": "^1.1.1",
-    "pretty-hrtime": "^1.0.0",
     "uglifyjs": "^2.4.10",
     "node-sass": "^3.3.2"
   },
   "devDependencies": {
-    "autoprefixer": "^5.1.0",
     "browser-sync": "^2.8.3",
-    <% if (browserSyncPushState) { %>"connect-history-api-fallback": "0.0.5",<% } %>
-    <% if (systemNotifications) { %>"gulp-notify": "^2.0.1",<% } %>
-    "watchify": "^3.4.0",
-    "chalk": "^1.1.1",
-    "gulp": "^3.8.10",
-    "gulp-sass": "^2.0.4",
-    "gulp-sourcemaps": "^1.2.7",
-    "gulp-postcss": "^6.0.0",
-    "gulp-util": "^3.0.1",
-    "gulp-mocha": "^2.1.3",
-    "gulp-jshint": "^1.9.0",
-    "jshint-stylish": "^1.0.0",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.0.0",
-    "yargs": "^3.23.0",
-    "require-dir": "^0.3.0"
+    "watchify": "^3.4.0"
   }
 }

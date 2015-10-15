@@ -74,7 +74,6 @@ module.exports = generators.Base.extend({
       this.template('templates/_index.html', 'templates/index.html');
     }
     this.src.copy('gulpfile.js', 'gulpfile.js');
-    this.src.copy('Makefile', 'Makefile');
   },
   install: function() {
     this.npmInstall();
