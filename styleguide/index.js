@@ -4,7 +4,7 @@ var chalk = require('chalk');
 module.exports = generators.Base.extend({
   app: function() {
     this.log(chalk.green(
-      "Generating your Holowgram styleguide"
+      "Generating your Hologram styleguide"
     ));
     this.directory('styleguide');
     this.src.copy('Gemfile', 'Gemfile');
