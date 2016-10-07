@@ -3,7 +3,7 @@
 var Router = require('ampersand-router');
 var log = require('loglevel');
 var React = require('react');
-var HelloView = require('./HelloView');
+var HelloView = require('./HelloView.jsx');
 
 var AppRouter = Router.extend({
   //

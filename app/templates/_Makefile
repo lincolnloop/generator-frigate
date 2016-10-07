@@ -1,0 +1,120 @@
+SHELL=/bin/bash -eu -o pipefail
+NPM_BIN := $(shell pwd)/node_modules/.bin
+
+# Only used in debug builds
+PROJECT_NAME := $(shell pwd | rev | cut -d'/' -f1 | rev)
+NOTIFY_CMD = $(NPM_BIN)/notify -t "Error" -m "The ${PROJECT_NAME} build broke!" -s Funk
+
+#     ___                   __
+#    /   |  _____________  / /______
+#   / /| | / ___/ ___/ _ \/ __/ ___/
+#  / ___ |(__  |__  )  __/ /_(__  )
+# /_/  |_/____/____/\___/\__/____/
+
+
+ASSETS_PATH = client/assets
+
+assets:   ## Collect assets
+	# Just copy them. No processing necessary
+	mkdir -p build
+	rsync -av --delete ${ASSETS_PATH}/ build/assets
+
+
+#    ________________
+#   / ____/ ___/ ___/
+#  / /    \__ \\__ \
+# / /___ ___/ /__/ /
+# \____//____/____/
+
+
+# Directory containing SCSS source files
+SCSS_PATH = client/scss
+
+# List of all SCSS files (recursive)
+SCSS_FILES := $(shell find ${SCSS_PATH} -name "*.scss")
+
+# List of all SCSS files, excluding those that begin with an underscore
+SCSS_ROOTS := $(shell find ${SCSS_PATH} ! -name "_*.scss" -name "*.scss")
+
+SASS_CMD = $(NPM_BIN)/node-sass --include-path ${SCSS_PATH}
+SASS_DEBUG_OPTS = --source-map=true --source-map-contents=true --source-map-embed=true
+SASS_PROD_OPTS = --output-style compressed
+AUTOPREFIXER = $(NPM_BIN)/postcss --use autoprefixer --autoprefixer.browsers "last 2 versions"
+
+
+build/css:
+	# Make build directory
+	mkdir -p $@
+
+# Toggle between production and debug builds using DEBUG=1
+buildcss = $(SASS_CMD) $(SASS_PROD_OPTS) $(1) | $(AUTOPREFIXER) > $(2)
+ifdef DEBUG
+buildcss = $(SASS_CMD) $(SASS_DEBUG_OPTS) $(1) > $(2) || $(NOTIFY_CMD)
+endif
+
+build/css/%.css: ${SCSS_FILES} build/css
+	$(call buildcss,${SCSS_PATH}/$*.scss,$@)
+
+
+# Only create CSS for root SCSS files
+# convert `client/scss/*.scss` to `build/css/*.css`
+css: $(patsubst ${SCSS_PATH}/%.scss,build/css/%.css,${SCSS_ROOTS})    ## Build CSS targets
+
+#        __                  _____           _       __
+#       / /___ __   ______ _/ ___/__________(_)___  / /_
+#  __  / / __ `/ | / / __ `/\__ \/ ___/ ___/ / __ \/ __/
+# / /_/ / /_/ /| |/ / /_/ /___/ / /__/ /  / / /_/ / /_
+# \____/\__,_/ |___/\__,_//____/\___/_/  /_/ .___/\__/
+#                                         /_/
+
+# Directory containing JS source files
+JS_PATH = client/js
+
+# default to production build
+buildjs = NODE_ENV=production $(NPM_BIN)/webpack -p
+
+ifdef DEBUG
+buildjs = $(NPM_BIN)/webpack --debug
+endif
+
+ifdef WATCH
+buildjs = $(NPM_BIN)/webpack --watch
+endif
+
+js:
+	$(call buildjs)
+
+#     __  ____
+#    /  |/  (_)_________
+#   / /|_/ / / ___/ ___/
+#  / /  / / (__  ) /__
+# /_/  /_/_/____/\___/
+
+
+clean:    ## Empty build directory
+	rm -rf build/*
+
+all: assets css js   ## Build all targets
+
+.PHONY: all clean css js assets watch help
+.DEFAULT_GOAL := all
+
+#     ____                 __                                 __
+#    / __ \___ _   _____  / /___  ____  ____ ___  ___  ____  / /_
+#   / / / / _ \ | / / _ \/ / __ \/ __ \/ __ `__ \/ _ \/ __ \/ __/
+#  / /_/ /  __/ |/ /  __/ / /_/ / /_/ / / / / / /  __/ / / / /_
+# /_____/\___/|___/\___/_/\____/ .___/_/ /_/ /_/\___/_/ /_/\__/
+#                             /_/
+
+
+# These aren't real `make` targets, but are useful helpers in development
+
+watch:    ## Watch JS, CSS, and Assets for changes
+	$(MAKE) DEBUG=1 all
+	watchman-make -p '${JS_PATH}/**/*.js' -t DEBUG=1 js \
+				  -p '${SCSS_PATH}/**/*.scss' -t DEBUG=1 css \
+				  -p '${ASSETS_PATH}/**' -t assets \
+				  -p '${SVG_PATH}/**' -t DEBUG=1 svg
+
+help:
+	@echo -e "$$(grep -hE '^\S+:.*##' $(MAKEFILE_LIST) | sed -e 's/:.*##\s*/:/' -e 's/^\(.\+\):\(.*\)/\\x1b[36m\1\\x1b[m:\2/' | column -c2 -t -s :)"

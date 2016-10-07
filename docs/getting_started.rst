@@ -11,10 +11,8 @@ After running `yo frigate` and completing the helper wizard, frigate will genera
 
 Config files:
 
-* Gemfile
-* Gemfile.lock
-* gulpfile.js
-* hologram_config.yml
+* bs.config.js
+* karma.conf.js
 * package.json
 * .gitignore
 
@@ -27,14 +25,13 @@ Directories:
 Support directories:
 
 * build
-* gulp
 * node_modules
 
 
-Gulp
+Makefile
 ----
 
-Gulp is a Javascript-based build system. It lets us create tasks and tools for managing different aspects of the development workflow.
+TODO: Gulp is a Javascript-based build system. It lets us create tasks and tools for managing different aspects of the development workflow.
 
 
 .. _gulp_primary_tasks:
