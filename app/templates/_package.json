@@ -4,11 +4,10 @@
   "version": "0.1.0",
   "main": "./client/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "scripts": {
-    "postinstall": "make clean && make -j4 all",
-    "build": "npm run postinstall"
+    "postinstall": "make -j5 all autoprefix=1",
+    "browser-sync": "browser-sync start --config bs.config.js",
+    "start": "make watch & npm run browser-sync",
+    "test": "karma start --single-run --no-auto-watch karma.conf.js"
   },
   "repository": {
     "type": "git",
@@ -17,42 +16,34 @@
   "bugs": {
     "url": "<%= github %>/issues"
   },
-  "browserify": {
-    "transform": [["babelify", { "blacklist": ["regenerator"] }]]
-  },
   "dependencies": {
-    "autoprefixer": "^5.1.0",
-    "postcss-cli": "^2.1.0",
-    "browserify": "^11.0.1",
-    "loglevel": "^1.2.0",
-    "react": "~0.13.3",
-    "babelify": "^6.3.0",
-    "ampersand-router": "^1.0.7",
-    "lodash.assign": "^3.0.0",
-    "reactify": "^1.1.1",
-    "pretty-hrtime": "^1.0.0",
-    "uglifyjs": "^2.4.10",
-    "node-sass": "^3.3.2"
+    "postcss-cli": "2.6.0",
+    "loglevel": "1.4.1",
+    "react": "15.3.2",
+    "autoprefixer": "6.5.0",
+    "babel-core": "6.17.0",
+    "babel-loader": "6.2.5",
+    "babel-preset-es2015": "6.16.0",
+    "babel-preset-react": "6.16.0",
+    "ampersand-router": "4.0.0",
+    "jsx-loader": "0.13.2",
+    "uglifyjs": "2.4.10",
+    "webpack": "1.13.2",
+    "node-sass": "3.10.1"
   },
   "devDependencies": {
-    "gulp-imagemin": "^2.3.0",
-    "browser-sync": "^2.8.3",
-    <% if (browserSyncPushState) { %>"connect-history-api-fallback": "0.0.5",<% } %>
-    <% if (systemNotifications) { %>"gulp-notify": "^2.0.1",<% } %>
-    "watchify": "^3.4.0",
-    "chalk": "^1.1.1",
-    "gulp": "^3.8.10",
-    "gulp-autoprefixer": "^2.0.0",
-    "gulp-sass": "^2.0.4",
-    "gulp-sourcemaps": "^1.2.7",
-    "gulp-postcss": "^6.0.0",
-    "gulp-util": "^3.0.1",
-    "gulp-mocha": "^2.1.3",
-    "gulp-jshint": "^1.9.0",
-    "jshint-stylish": "^1.0.0",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.0.0",
-    "yargs": "^3.23.0",
-    "require-dir": "^0.3.0"
+    "browser-sync": "2.17.0",
+    "jasmine-core": "2.5.2",
+    "karma": "1.3.0",
+    "karma-jasmine": "1.0.2",
+    "karma-spec-reporter": "0.0.26",
+    "enzyme": "2.4.1",
+    "karma-webpack": "1.8.0",
+    "enzyme": "2.4.1",
+    "karma-firefox-launcher": "1.0.0",
+    "karma-chrome-launcher": "2.0.0",
+    "karma-phantomjs-launcher": "^1.0.0",
+    "phantomjs-polyfill": "0.0.2",
+    "phantomjs-prebuilt": "^2.1.7"
   }
 }

@@ -10,23 +10,18 @@ Create a new Frigate project. If you already have one, skip this step::
     mkdir my_new_project && cd $_
     yo frigate
 
-Start gulp::
+Makefile::
 
     #
     # Builds site and starts local web server on port 8000
     #
-    gulp
-
-    #
-    # Example of overriding web server port
-    #
-    PORT=9900 gulp
+    npm start
 
 You should see some output in the console showing the various :ref:`Frigate build tasks <gulp_primary_tasks>` executing, and web and BrowserSync services starting. Your default browser should open a tab at *localhost:<PORT>* for you. You can open another tab (`http://localhost:3000`_) to see BrowserSync update in multiple locations.
 
 .. _http://localhost:3000: http://localhost:3000)
 
-If you'd like to connect mobile devices at this time, refer to the console output from when Gulp started up. You should see a line containing ``External URL similar to``::
+If you'd like to connect mobile devices at this time, refer to the console output from start up. You should see a line containing ``External URL similar to``::
 
   [BS] External URL: http://192.168.1.2:3000
 
@@ -41,7 +36,7 @@ Make Some Project Changes
 
 Your project is running. It is time to make some changes to various types of files and confirm that Frigate's automatic update and notification tools are working.
 
-There are two main directories you will work out of. The ``client`` directory is where the project's application code and assets live. ``templates`` are where template files live. When changes are made to files in these directories, Gulp will do any processing that needs to happen on them (such as converting Sass to CSS) and copy them to the project's build directory. All content you see when viewing the project's site comes from the project's build directory. The build directory is considered volatile and can be emptied if needed. Running ``gulp`` (or explicitly ``gulp build`` or ``gulp watch``) builds all of the project's files ready for serving. You can make changes directly in the build directory and the site should update, but in general it is best to do all work in the working directories (client and templates).
+There are two main directories you will work out of. The ``client`` directory is where the project's application code and assets live. ``templates`` are where template files live. When changes are made to files in these directories, watch will do any processing that needs to happen on them (such as converting Sass to CSS) and copy them to the project's build directory. All content you see when viewing the project's site comes from the project's build directory. The build directory is considered volatile and can be emptied if needed. Running ``npm start`` (or explicitly ``make all`` or ``make watch``) builds all of the project's files ready for serving. You can make changes directly in the build directory and the site should update, but in general it is best to do all work in the working directories (client and templates).
 
 Editing Sass
 ------------
@@ -58,8 +53,6 @@ Our starting content is a simple page containing red square with rounded corners
     }
 
 Once you save, check your connected clients and confirm the square has changed color.
-
-NOTE - vim can confuse the Gulp watch if it saves temp files
 
 Editing Templates
 -----------------

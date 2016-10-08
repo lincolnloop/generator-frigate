@@ -67,13 +67,14 @@ module.exports = generators.Base.extend({
   },
   app: function() {
     this.directory('client');
-    this.directory('gulp');
-    this.template('_gulp.config.js', 'gulp/config.js');
+    this.template('_karma.conf.js', 'karma.conf.js');
+    this.template('_Makefile', 'Makefile');
+    this.template('_bs.config.js', 'bs.config.js');
+    this.template('_webpack.config.js', 'webpack.config.js');
     if (this.browserSyncMode === 'server') {
       this.template('templates/_index.html', 'templates/index.html');
     }
-    this.src.copy('gulpfile.js', 'gulpfile.js');
-    this.src.copy('Makefile', 'Makefile');
+    this.src.copy('babelrc', '.babelrc');
   },
   install: function() {
     this.npmInstall();
