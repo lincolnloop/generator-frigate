@@ -7,8 +7,6 @@
     "postinstall": "make -j5 all autoprefix=1",
     "browser-sync": "browser-sync start --config bs.config.js",
     "start": "make watch & npm run browser-sync",
-
-    "browser-sync": "browser-sync start --config bs.config.js",
     "test": "karma start --single-run --no-auto-watch karma.conf.js"
   },
   "repository": {
@@ -39,6 +37,7 @@
     "karma": "1.3.0",
     "karma-jasmine": "1.0.2",
     "karma-spec-reporter": "0.0.26",
+    "enzyme": "2.4.1",
     "karma-webpack": "1.8.0",
     "enzyme": "2.4.1",
     "karma-firefox-launcher": "1.0.0",

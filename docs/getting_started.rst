@@ -11,9 +11,10 @@ After running `yo frigate` and completing the helper wizard, frigate will genera
 
 Config files:
 
+* package.json
 * bs.config.js
 * karma.conf.js
-* package.json
+* .babelrc
 * .gitignore
 
 Directories:
@@ -31,10 +32,17 @@ Support directories:
 Makefile
 ----
 
-TODO: Gulp is a Javascript-based build system. It lets us create tasks and tools for managing different aspects of the development workflow.
+We're using make to as a way to run and integrate the different tasks and configuration of the development workflow.
 
 
-.. _gulp_primary_tasks:
+
+Dependencies
+---------------
+
+Frigate depends on watchman (https://facebook.github.io/watchman/docs/install.html) to watch for file changes and run the build automatically.
+
+
+.. _primary_tasks:
 
 Primary Tasks
 ~~~~~~~~~~~~~
@@ -43,37 +51,31 @@ Usually you'll work with a few primary tasks that will take of most of your work
 
 **build**
 
-The ``build`` task preps your project for serving. It cleans the build directory, processes Sass into CSS, and moves static files (css, images, js and templates) to the build directory. After running ``build``, your project should be ready for serving by a web server configured to serve content from the project build directory.
+The ``make build`` task preps your project for serving. It cleans the build directory, processes Sass into CSS, and moves static files (css, images, js and templates) to the build directory. After running ``make build``, your project should be ready for serving by a web server configured to serve content from the project build directory.
 
 **watch**
 
-The ``watch`` task watches your project's files for changes and when a change is detected, it performs steps nearly identical to ``build``. The difference is that the ``watch`` does not clean the build directory each time. ``watch`` also provides a few other conveniences. If you selected a Connect server during project initialization, it starts a local server configured to server your built assets. It also starts LiveReload so that changes are reflected in open browsers without needing refresh. Finally, it also performs a Javascript linting operation and reports warnings to the console. With ``watch`` you can quickly iterate changes in your code without having to continually run preprocessing/build steps in the console or manually refresh one or more browser windows.
+The ``make watch`` task watches your project's files for changes and when a change is detected, it performs steps nearly identical to ``make build``. The difference is that ``make watch`` does not clean the build directory each time. ``make watch`` also provides a few other conveniences. If you selected a Connect server during project initialization, it starts a local server configured to server your built assets. It also starts LiveReload so that changes are reflected in open browsers without needing refresh. Finally, it also performs a Javascript linting operation and reports warnings to the console. With ``make watch`` you can quickly iterate changes in your code without having to continually run preprocessing/build steps in the console or manually refresh one or more browser windows.
 
-Most of the time, you'll simply run the ``watch`` task and then focus on your work. Gulp also supports the idea of a default task, and Frigate designates ``watch`` as the default task. This means you can simply run ``gulp`` and then start working in your code.
-
-**Default Task (watch)**
-
-Occasionally it may seem that updates to your code are no longer being reflected in the browser. Sometimes a saved change can cause some part of the build process to fail, and subsequently the gulp process will crash. For example, if browserify can't resolve something this can happen. Check your console to see where in your code things are causing problems, fix, and restart gulp.
+Most of the time, you'll simply run ``make watch`` and then focus on your work.
 
 
 Secondary Tasks
 ~~~~~~~~~~~~~~~
 
-These are tasks that compose ``build`` and ``watch``, but they can run individually if needed.
+These are tasks that compose ``make build`` and ``make watch``, but they can run individually if needed.
 
 * clean
 * assets
-* templates
-* sass
-* browserify
-* lint:js
-* optimize
+* css
+* js
+* help
 
 
 BrowserSync
 ------------
 
- `BrowserSync`_ is a tool that keeps multiple browsers across multiple devices in sync while you develop your project. Frigate's Gulp configuration manages BrowserSync for all your project files. All connected clients to your project will update automatically whenever project files change.
+ `BrowserSync`_ is a tool that keeps multiple browsers across multiple devices in sync while you develop your project. All connected clients to your project will update automatically whenever project files change.
 
   .. _BrowserSync: http://www.browsersync.io/
 
@@ -81,7 +83,7 @@ BrowserSync
 Connecting Multiple Devices
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When you run ``gulp`` (or ``gulp watch``), you should see a line in the startup output similar to::
+When you run ``make`` (or ``make watch``), you should see a line in the startup output similar to::
 
   [BS] External URL: http://192.168.1.2:3000
 

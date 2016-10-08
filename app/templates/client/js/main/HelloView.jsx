@@ -1,6 +1,6 @@
 'use strict';
 
-import React from 'React';
+import React from 'react';
 
 const HelloView = () => (
   <h1>Hello World with React</h1>
