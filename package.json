@@ -1,18 +1,19 @@
 {
   "name": "generator-frigate",
   "version": "0.7.0",
-  "description": "Yeoman generator with browserify, libsass, React and BrowserSync",
+  "description": "Yeoman generator with webpack (or browserify option in the near future), es6, libsass, React and BrowserSync",
   "repository": {
     "type": "git",
     "url": "https://github.com/lincolnloop/generator-frigate"
   },
   "keywords": [
     "yeoman-generator",
-    "gulp",
     "makefile",
     "javascript",
     "build",
+    "es6",
     "tool",
+    "webpack",
     "browserify",
     "sass",
     "BrowserSync"
