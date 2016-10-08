@@ -12,12 +12,11 @@
 ## Features
 
 * Application structure and setup that works for single page apps and web sites.
-* Full featured `Gulp` setup with:
-  * Browserify
+* Full featured front-end workflow setup with:
+  * Webpack
   * Sass and CSS auto-prefixing
   * CSS and JavaScript minification
   * BrowserSync
-  * Image Optimization (via OptiPNG, pngquant, jpegtran and gifsicle)
 * Built-in static server (optional)
 
 
@@ -43,7 +42,7 @@ Run:
 yo frigate
 ```
 
-Run `gulp` for asset watching/compiling with BrowserSync support and `npm run build` for a production-ready build
+Run `npm start` for asset watching/compiling with BrowserSync support and `make all` for a production-ready build
 
 ## Documentation
 
