@@ -1,12 +1,14 @@
 "use strict";
-var assert = require("assert");
+var expect = require('chai').expect;
+import {shallow, mount, render} from 'enzyme';
+import React from 'react';
 import HelloView from '../../js/main/HelloView.jsx';
 
 describe('Test for Hello View', function(){
-  describe('#indexOf()', function(){
-    it('should return -1 when the value is not present', function(){
-      assert.equal(-1, [1,2,3].indexOf(5));
-      assert.equal(-1, [1,2,3].indexOf(0));
+  describe('render()', function(){
+    it('should have one h1 element', function(){
+      const wrapper = shallow(<HelloView />);
+      expect(wrapper.find('h1')).to.have.length(1);
     });
   });
 });
