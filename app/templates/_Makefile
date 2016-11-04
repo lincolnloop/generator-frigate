@@ -67,22 +67,10 @@ css: $(patsubst ${SCSS_PATH}/%.scss,build/css/%.css,${SCSS_ROOTS})    ## Build C
 # \____/\__,_/ |___/\__,_//____/\___/_/  /_/ .___/\__/
 #                                         /_/
 
-# Directory containing JS source files
-JS_PATH = client/js
-
-# default to production build
-buildjs = NODE_ENV=production $(NPM_BIN)/webpack -p
-
-ifdef DEBUG
-buildjs = $(NPM_BIN)/webpack --debug
-endif
-
-ifdef WATCH
-buildjs = $(NPM_BIN)/webpack --watch
-endif
+# watch JS is done through a webpack bundle setup on bs.config.js so we can use React hot reloading
 
 js:
-	$(call buildjs)
+	$(call NODE_ENV=production $(NPM_BIN)/webpack -p)
 
 #     __  ____
 #    /  |/  (_)_________
@@ -109,14 +97,11 @@ all: assets css js   ## Build all targets
 
 # These aren't real `make` targets, but are useful helpers in development
 
-watch-css-assets:    ## Watch CSS, and Assets for changes
+watch:    ## Watch CSS and Assets for changes
 	$(MAKE) DEBUG=1 css assets
 	watchman-make -p '${SCSS_PATH}/**/*.scss' -t DEBUG=1 css \
 				  -p '${ASSETS_PATH}/**' -t assets \
 				  -p '${SVG_PATH}/**' -t DEBUG=1 svg
-
-watch:
-	$(MAKE) -j2 WATCH=1 js watch-css-assets
 
 
 help:
