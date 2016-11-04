@@ -109,12 +109,15 @@ all: assets css js   ## Build all targets
 
 # These aren't real `make` targets, but are useful helpers in development
 
-watch:    ## Watch JS, CSS, and Assets for changes
-	$(MAKE) DEBUG=1 all
-	watchman-make -p '${JS_PATH}/**/*.js' '${JS_PATH}/**/*.jsx' -t DEBUG=1 js \
-				  -p '${SCSS_PATH}/**/*.scss' -t DEBUG=1 css \
+watch-css-assets:    ## Watch CSS, and Assets for changes
+	$(MAKE) DEBUG=1 css assets
+	watchman-make -p '${SCSS_PATH}/**/*.scss' -t DEBUG=1 css \
 				  -p '${ASSETS_PATH}/**' -t assets \
 				  -p '${SVG_PATH}/**' -t DEBUG=1 svg
+
+watch:
+	$(MAKE) -j2 WATCH=1 js watch-css-assets
+
 
 help:
 	@echo -e "$$(grep -hE '^\S+:.*##' $(MAKEFILE_LIST) | sed -e 's/:.*##\s*/:/' -e 's/^\(.\+\):\(.*\)/\\x1b[36m\1\\x1b[m:\2/' | column -c2 -t -s :)"
