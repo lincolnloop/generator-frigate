@@ -2,7 +2,10 @@
 
 import React from 'react';
 
-const HelloView = () => (
-  <h1>Hello World with React</h1>
-);
-export default HelloView;
+class HelloView extends React.Component {
+  render() {
+    return <h2>Hello REACT!!</h2>;
+  }
+}
+
+module.exports = HelloView;

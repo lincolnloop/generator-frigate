@@ -111,7 +111,7 @@ all: assets css js   ## Build all targets
 
 watch:    ## Watch JS, CSS, and Assets for changes
 	$(MAKE) DEBUG=1 all
-	watchman-make -p '${JS_PATH}/**/*.js' -t DEBUG=1 js \
+	watchman-make -p '${JS_PATH}/**/*.js' '${JS_PATH}/**/*.jsx' -t DEBUG=1 js \
 				  -p '${SCSS_PATH}/**/*.scss' -t DEBUG=1 css \
 				  -p '${ASSETS_PATH}/**' -t assets \
 				  -p '${SVG_PATH}/**' -t DEBUG=1 svg
