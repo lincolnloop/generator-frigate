@@ -13,7 +13,7 @@ Create a new Frigate project. If you already have one, skip this step::
 Makefile::
 
     #
-    # Builds site and starts local web server on port 8000
+    # Builds the webapp and starts local web server on port 3000
     #
     npm start
 
@@ -97,3 +97,7 @@ Edit Directly in the Browser
 
 Javascript Tests and Linting
 ============================
+
+JavaScript unit testing is supported with Karma and Jasmine. To run the tests::
+
+    npm test

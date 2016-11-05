@@ -42,7 +42,8 @@ Run:
 yo frigate
 ```
 
-Run `npm start` for asset watching/compiling with BrowserSync support and `make all` for a production-ready build
+Run `npm start` for asset watching/compiling with BrowserSync and hot reloading support and `make all` for a production-ready build.
+To run tests, use `npm test`.
 
 ## Documentation
 

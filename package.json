@@ -1,7 +1,7 @@
 {
   "name": "generator-frigate",
-  "version": "0.8.1",
-  "description": "Yeoman generator with webpack, babel, libsass, React (inc. hot reloading) and BrowserSync",
+  "version": "0.8.2",
+  "description": "Yeoman generator for webapp development with React, webpack hot reloading, es6 (babel), sass, karma and BrowserSync as a development server/proxy.",
   "repository": {
     "type": "git",
     "url": "https://github.com/lincolnloop/generator-frigate"
