@@ -13,9 +13,10 @@
 
 * Application structure and setup that works for single page apps and web sites.
 * Full featured front-end workflow setup with:
-  * Webpack
+  * Webpack w/ React hot reloading support
   * Sass and CSS auto-prefixing
   * CSS and JavaScript minification
+  * React unit testing
   * BrowserSync
 * Built-in static server (optional)
 
